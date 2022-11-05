@@ -10,17 +10,28 @@ import {
 } from "../../globals/constants/constants";
 
 const AudioWaveform = () => {
+  ////////////////////////////////// Start Initialization //////////////////////////////////
+
   // wavesurfer reference
   const wavesurferRef = useRef(null);
 
+  // wavesurfer processed reference
+  const wavesurferProcessedRef = useRef(null);
+
   // timeline reference
   const timelineRef = useRef(null);
+
+  // timeline processed reference
+  const timelineProcessedRef = useRef(null);
 
   // fetch files from the context
   const { inputFileUrl, processedFileUrl } = useContext(FileContext);
 
   // create an instance of the wavesurfer
   const [wavesurferObj, setWavesurferObj] = useState();
+
+  // create an instance of the wavesurfer Processed
+  const [wavesurferProcessedObj, setWavesurferProcessedObj] = useState();
 
   // to keep track whether audio is currently playing or not
   const [playing, setPlaying] = useState(true);
@@ -30,6 +41,10 @@ const AudioWaveform = () => {
 
   // to control the zoom level of the waveform
   const [zoom, setZoom] = useState(1);
+
+  ////////////////////////////////// End Initialization //////////////////////////////////
+
+  ////////////////////////////////// Start State Methods //////////////////////////////////
 
   // create the waveform of input file inside the component
   useEffect(() => {
@@ -45,7 +60,7 @@ const AudioWaveform = () => {
           progressColor: color_cyan,
           responsive: true,
           interact: false,
-          height: 200,
+          height: 150,
           plugins: [
             // timeline below the waveform
             TimelinePlugin.create({
@@ -83,31 +98,28 @@ const AudioWaveform = () => {
       wavesurferObj.on("finish", () => {
         setPlaying(false);
       });
-
-      // if multiple regions are created
-      // then remove all the previous regions
-      // so that only 1 is present at any given time
-      wavesurferObj.on("region-updated", (region) => {
-        const regions = region.wavesurfer.regions.list;
-        const keys = Object.keys(regions);
-        if (keys.length > 1) {
-          regions[keys[0]].remove();
-        }
-      });
     }
   }, [wavesurferObj]);
 
   // set volume of the wavesurfer object
   // whenever volume variable in state is changed
   useEffect(() => {
-    if (wavesurferObj) wavesurferObj.setVolume(volume);
+    if (wavesurferObj) {
+      wavesurferObj.setVolume(volume);
+    }
   }, [volume, wavesurferObj]);
 
   // set zoom level of the wavesurfer object
   //whenever the zoom variable in state is changed
   useEffect(() => {
-    if (wavesurferObj) wavesurferObj.zoom(zoom);
+    if (wavesurferObj) {
+      wavesurferObj.zoom(zoom);
+    }
   }, [zoom, wavesurferObj]);
+
+  ////////////////////////////////// End State Methods //////////////////////////////////
+
+  ////////////////////////////////// Start Handling Mehtods //////////////////////////////////
 
   // play/pause waveform on pressing play/pause button
   const handlePlayPause = (e) => {
@@ -137,10 +149,13 @@ const AudioWaveform = () => {
     setZoom(e.target.value);
   };
 
+  ////////////////////////////////// End Handling Mehtods //////////////////////////////////
+
   return (
     <section className="waveform-container">
       <div ref={wavesurferRef} id="waveform" />
       <div ref={timelineRef} id="wave-timeline" />
+
       <div className="all-controls">
         <div className="left-container">
           <button
