@@ -12,7 +12,7 @@ const UploadAudio = () => {
   useEffect(() => {
     if (file) {
       setInputFileUrl(URL.createObjectURL(file));
-      // setProcessedFileUrl(URL.createObjectURL(file));
+      setProcessedFileUrl(URL.createObjectURL(file));
     }
   }, [file]);
 
