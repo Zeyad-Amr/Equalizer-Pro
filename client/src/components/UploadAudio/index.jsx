@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { FileContext } from "../../contexts/index";
 import "./style.css";
+import axios from "axios";
 
 const UploadAudio = () => {
   const inputFile = useRef(null);
@@ -17,9 +18,18 @@ const UploadAudio = () => {
     inputFile.current.click();
   };
 
-  const handleFileUpload = (e) => {
+  const handleFileUpload = async (e) => {
     // console.log(file);
     setFile(URL.createObjectURL(e.target.files[0]));
+
+    const response = await axios
+      .post("/upload", file)
+      .then((e) => {
+        console.log("Success");
+      })
+      .catch((e) => {
+        console.log("Error", e);
+      });
   };
 
   return (

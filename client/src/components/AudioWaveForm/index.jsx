@@ -158,6 +158,7 @@ const AudioWaveform = () => {
             />
             <i className="material-symbols-rounded  zoom-icon">add_circle</i>
           </div>
+
           <div className="volume-slide-container">
             {volume > 0 ? (
               <i className="material-symbols-rounded">volume_up</i>
