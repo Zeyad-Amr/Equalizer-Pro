@@ -7,6 +7,8 @@ const Body = () => {
   return (
     <div>
       <UploadAudio />
+      <br />
+      <br />
       <AudioWaveform />
     </div>
   );

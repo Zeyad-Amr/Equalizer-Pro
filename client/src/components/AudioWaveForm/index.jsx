@@ -34,7 +34,7 @@ const AudioWaveform = () => {
   const [volume, setVolume] = useState(1);
 
   // to control the zoom level of the waveform
-  const [zoom, setZoom] = useState(1);
+  const [zoom, setZoom] = useState(20000);
 
   ////////////////////////////////// End Initialization //////////////////////////////////
 
@@ -48,6 +48,7 @@ const AudioWaveform = () => {
           container: "#waveform",
           scrollParent: true,
           autoCenter: true,
+          hideScrollbar: true,
           cursorColor: color_black,
           loopSelection: true,
           waveColor: color_white,
@@ -74,6 +75,7 @@ const AudioWaveform = () => {
           container: "#waveform",
           scrollParent: true,
           autoCenter: true,
+          hideScrollbar: true,
           cursorColor: color_black,
           loopSelection: true,
           waveColor: color_white,
@@ -248,7 +250,7 @@ const AudioWaveform = () => {
             <input
               type="range"
               min="1"
-              max="1000"
+              max="20000"
               value={zoom}
               onChange={handleZoomSlider}
               class="slider zoom-slider"

@@ -26,6 +26,9 @@ const UploadAudio = () => {
     const formData = new FormData();
     formData.append("file", e.target.files[0]);
 
+    console.log(formData);
+    // console.log(e.target.files[0]);
+
     const response = await axios
       .post("/upload", formData)
       .then((response) => {
@@ -48,7 +51,6 @@ const UploadAudio = () => {
         id="file"
         ref={inputFileRef}
         style={{ display: "none" }}
-        accept="audio/*"
         onChange={handleFileUpload}
       />
     </div>
