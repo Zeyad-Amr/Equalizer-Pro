@@ -6,7 +6,7 @@ import axios from "../../globals/API/axios";
 const UploadAudio = () => {
   const inputFile = useRef(null);
   const { fileURL, setFileURL } = useContext(FileContext);
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState();
 
   useEffect(() => {
     if (file) {
@@ -21,9 +21,12 @@ const UploadAudio = () => {
   const handleFileUpload = async (e) => {
     // console.log(file);
     setFile(URL.createObjectURL(e.target.files[0]));
+    const formData = new FormData();
+
+		formData.append('file', e.target.files[0]);
 
     const response = await axios
-      .post("/upload", file)
+      .post("/upload", formData)
       .then((response) => {
         console.log("Success");
         console.log(response);
@@ -42,6 +45,7 @@ const UploadAudio = () => {
       <input
         type="file"
         id="file"
+        name="file"
         ref={inputFile}
         style={{ display: "none" }}
         accept="audio/*"

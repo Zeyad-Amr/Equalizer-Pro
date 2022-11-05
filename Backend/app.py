@@ -14,10 +14,11 @@ class equalizer(Resource):  # header
         return 'Task 2 equalizer hehe'  # body
 
     def post(self):
-        print(type(request.files))
+        # print(type(request.files))
+        print(request.files)
 
         if "file" not in request.files:
-            return {"there is an error": 'err'}, 200
+            return {"there is an error": 'err'}, 400
 
         file = request.files["file"]
 
