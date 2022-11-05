@@ -1,0 +1,14 @@
+
+/* footer style */
+footer {
+    font-family: inherit;
+    position: fixed;
+    bottom: 2%;
+    right: 2%;
+  }
+
+
+  @media screen and (max-width: 430px) {
+    
+  
+  }
