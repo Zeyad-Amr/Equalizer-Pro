@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { FileContext } from "../../contexts/index";
 import "./style.css";
-import axios from "axios";
+import axios from "../../globals/API/axios";
 
 const UploadAudio = () => {
   const inputFile = useRef(null);
@@ -24,8 +24,9 @@ const UploadAudio = () => {
 
     const response = await axios
       .post("/upload", file)
-      .then((e) => {
+      .then((response) => {
         console.log("Success");
+        console.log(response);
       })
       .catch((e) => {
         console.log("Error", e);
