@@ -5,13 +5,15 @@ import wavesurfer from "wavesurfer.js";
 import "./style.css";
 import {
   color_cyan,
-  color_blue,
   color_black,
   color_white,
 } from "../../globals/constants/constants";
 
 const AudioWaveform = () => {
+  // wavesurfer reference
   const wavesurferRef = useRef(null);
+
+  // timeline reference
   const timelineRef = useRef(null);
 
   // fetch files from the context
@@ -20,12 +22,16 @@ const AudioWaveform = () => {
   // create an instance of the wavesurfer
   const [wavesurferObj, setWavesurferObj] = useState();
 
-  const [playing, setPlaying] = useState(true); // to keep track whether audio is currently playing or not
-  const [volume, setVolume] = useState(1); // to control volume level of the audio. 0-mute, 1-max
-  const [zoom, setZoom] = useState(1); // to control the zoom level of the waveform
-  const [duration, setDuration] = useState(0); // duration is used to set the default region of selection for trimming the audio
+  // to keep track whether audio is currently playing or not
+  const [playing, setPlaying] = useState(true);
 
-  // create the waveform inside the correct component
+  // to control volume level of the audio. 0-mute, 1-max
+  const [volume, setVolume] = useState(1);
+
+  // to control the zoom level of the waveform
+  const [zoom, setZoom] = useState(1);
+
+  // create the waveform of input file inside the component
   useEffect(() => {
     if (wavesurferRef.current && !wavesurferObj) {
       setWavesurferObj(
@@ -41,6 +47,7 @@ const AudioWaveform = () => {
           interact: false,
           height: 200,
           plugins: [
+            // timeline below the waveform
             TimelinePlugin.create({
               container: "#wave-timeline",
             }),
@@ -50,7 +57,8 @@ const AudioWaveform = () => {
     }
   }, [wavesurferRef, wavesurferObj]);
 
-  // once the file URL is ready, load the file to produce the waveform
+  // once the input file URL is ready
+  // load the input file to produce the waveform
   useEffect(() => {
     if (inputFileUrl && wavesurferObj) {
       wavesurferObj.load(inputFileUrl);
@@ -59,11 +67,11 @@ const AudioWaveform = () => {
 
   useEffect(() => {
     if (wavesurferObj) {
-      // once the waveform is ready, play the audio
+      // once the waveform is ready
+      // play the audio
       wavesurferObj.on("ready", () => {
+        // play the waveform
         wavesurferObj.play();
-        wavesurferObj.enableDragSelection({}); // to select the region to be trimmed
-        setDuration(Math.floor(wavesurferObj.getDuration())); // set the duration in local state
       });
 
       // once audio starts playing, set the state variable to true
@@ -76,7 +84,9 @@ const AudioWaveform = () => {
         setPlaying(false);
       });
 
-      // if multiple regions are created, then remove all the previous regions so that only 1 is present at any given time
+      // if multiple regions are created
+      // then remove all the previous regions
+      // so that only 1 is present at any given time
       wavesurferObj.on("region-updated", (region) => {
         const regions = region.wavesurfer.regions.list;
         const keys = Object.keys(regions);
@@ -87,44 +97,42 @@ const AudioWaveform = () => {
     }
   }, [wavesurferObj]);
 
-  // set volume of the wavesurfer object, whenever volume variable in state is changed
+  // set volume of the wavesurfer object
+  // whenever volume variable in state is changed
   useEffect(() => {
     if (wavesurferObj) wavesurferObj.setVolume(volume);
   }, [volume, wavesurferObj]);
 
-  // set zoom level of the wavesurfer object, whenever the zoom variable in state is changed
+  // set zoom level of the wavesurfer object
+  //whenever the zoom variable in state is changed
   useEffect(() => {
     if (wavesurferObj) wavesurferObj.zoom(zoom);
   }, [zoom, wavesurferObj]);
 
-  // when the duration of the audio is available, set the length of the region depending on it, so as to not exceed the total lenght of the audio
-  useEffect(() => {
-    if (duration && wavesurferObj) {
-      // add a region with default length
-      wavesurferObj.addRegion({
-        start: Math.floor(duration / 2) - Math.floor(duration) / 5, // time in seconds
-        end: Math.floor(duration / 2), // time in seconds
-        color: "hsla(265, 100%, 86%, 0.4)", // color of the selected region, light hue of purple
-      });
-    }
-  }, [duration, wavesurferObj]);
-
+  // play/pause waveform on pressing play/pause button
   const handlePlayPause = (e) => {
     wavesurferObj.playPause();
     setPlaying(!playing);
   };
 
+  // reload waveform on pressing reload button
   const handleReload = (e) => {
-    // stop will return the audio to 0s, then play it again
+    // stop will return the audio to 0s
     wavesurferObj.stop();
+
+    //then play it again
     wavesurferObj.play();
-    setPlaying(true); // to toggle the play/pause button icon
+
+    // to toggle the play/pause button icon
+    setPlaying(true);
   };
 
+  // set volume value to local state
   const handleVolumeSlider = (e) => {
     setVolume(e.target.value);
   };
 
+  // set zoom value to local state
   const handleZoomSlider = (e) => {
     setZoom(e.target.value);
   };
