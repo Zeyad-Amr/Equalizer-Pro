@@ -15,14 +15,8 @@ const AudioWaveform = () => {
   // wavesurfer reference
   const wavesurferRef = useRef(null);
 
-  // wavesurfer processed reference
-  const wavesurferProcessedRef = useRef(null);
-
   // timeline reference
   const timelineRef = useRef(null);
-
-  // timeline processed reference
-  const timelineProcessedRef = useRef(null);
 
   // fetch files from the context
   const { inputFileUrl, processedFileUrl } = useContext(FileContext);
@@ -34,7 +28,7 @@ const AudioWaveform = () => {
   const [wavesurferProcessedObj, setWavesurferProcessedObj] = useState();
 
   // to keep track whether audio is currently playing or not
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
 
   // to control volume level of the audio. 0-mute, 1-max
   const [volume, setVolume] = useState(1);
@@ -72,6 +66,32 @@ const AudioWaveform = () => {
     }
   }, [wavesurferRef, wavesurferObj]);
 
+  // create the waveform of processed file inside the component
+  useEffect(() => {
+    if (wavesurferRef.current && !wavesurferProcessedObj) {
+      setWavesurferProcessedObj(
+        wavesurfer.create({
+          container: "#waveform",
+          scrollParent: true,
+          autoCenter: true,
+          cursorColor: color_black,
+          loopSelection: true,
+          waveColor: color_white,
+          progressColor: color_cyan,
+          responsive: true,
+          interact: false,
+          height: 150,
+          plugins: [
+            // timeline below the waveform
+            TimelinePlugin.create({
+              container: "#wave-timeline",
+            }),
+          ],
+        })
+      );
+    }
+  }, [wavesurferRef, wavesurferProcessedObj]);
+
   // once the input file URL is ready
   // load the input file to produce the waveform
   useEffect(() => {
@@ -80,14 +100,22 @@ const AudioWaveform = () => {
     }
   }, [inputFileUrl, wavesurferObj]);
 
+  // once the Processed file URL is ready
+  // load the input Processed to produce the waveform
+  useEffect(() => {
+    if (processedFileUrl && wavesurferProcessedObj) {
+      wavesurferProcessedObj.load(processedFileUrl);
+    }
+  }, [inputFileUrl, wavesurferProcessedObj]);
+
   useEffect(() => {
     if (wavesurferObj) {
       // once the waveform is ready
       // play the audio
-      wavesurferObj.on("ready", () => {
-        // play the waveform
-        wavesurferObj.play();
-      });
+      // wavesurferObj.on("ready", () => {
+      //   // play the waveform
+      //   wavesurferObj.play();
+      // });
 
       // once audio starts playing, set the state variable to true
       wavesurferObj.on("play", () => {
@@ -101,6 +129,27 @@ const AudioWaveform = () => {
     }
   }, [wavesurferObj]);
 
+  useEffect(() => {
+    if (wavesurferProcessedObj) {
+      // once the waveform is ready
+      // play the audio
+      // wavesurferProcessedObj.on("ready", () => {
+      //   // play the waveform
+      //   wavesurferProcessedObj.play();
+      // });
+
+      // once audio starts playing, set the state variable to true
+      wavesurferProcessedObj.on("play", () => {
+        setPlaying(true);
+      });
+
+      // once audio starts playing, set the state variable to false
+      wavesurferProcessedObj.on("finish", () => {
+        setPlaying(false);
+      });
+    }
+  }, [wavesurferProcessedObj]);
+
   // set volume of the wavesurfer object
   // whenever volume variable in state is changed
   useEffect(() => {
@@ -108,6 +157,14 @@ const AudioWaveform = () => {
       wavesurferObj.setVolume(volume);
     }
   }, [volume, wavesurferObj]);
+
+  // set volume of the wavesurfer object
+  // whenever volume variable in state is changed
+  useEffect(() => {
+    if (wavesurferProcessedObj) {
+      wavesurferProcessedObj.setVolume(volume);
+    }
+  }, [volume, wavesurferProcessedObj]);
 
   // set zoom level of the wavesurfer object
   //whenever the zoom variable in state is changed
@@ -117,6 +174,14 @@ const AudioWaveform = () => {
     }
   }, [zoom, wavesurferObj]);
 
+  // set zoom level of the wavesurfer object
+  //whenever the zoom variable in state is changed
+  useEffect(() => {
+    if (wavesurferProcessedObj) {
+      wavesurferProcessedObj.zoom(zoom);
+    }
+  }, [zoom, wavesurferProcessedObj]);
+
   ////////////////////////////////// End State Methods //////////////////////////////////
 
   ////////////////////////////////// Start Handling Mehtods //////////////////////////////////
@@ -124,6 +189,7 @@ const AudioWaveform = () => {
   // play/pause waveform on pressing play/pause button
   const handlePlayPause = (e) => {
     wavesurferObj.playPause();
+    wavesurferProcessedObj.playPause();
     setPlaying(!playing);
   };
 
@@ -131,9 +197,11 @@ const AudioWaveform = () => {
   const handleReload = (e) => {
     // stop will return the audio to 0s
     wavesurferObj.stop();
+    wavesurferProcessedObj.stop();
 
     //then play it again
     wavesurferObj.play();
+    wavesurferProcessedObj.play();
 
     // to toggle the play/pause button icon
     setPlaying(true);
