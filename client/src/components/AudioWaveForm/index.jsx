@@ -3,6 +3,9 @@ import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js
 import { FileContext } from "../../contexts/index";
 import wavesurfer from "wavesurfer.js";
 import "./style.css";
+import { color_white } from "../../globals/constants/constants";
+import { color_cyan } from "../../globals/constants/constants";
+import { color_blue } from "../../globals/constants/constants";
 
 const AudioWaveform = () => {
   const wavesurferRef = useRef(null);
@@ -27,13 +30,13 @@ const AudioWaveform = () => {
           container: "#waveform",
           scrollParent: true,
           autoCenter: true,
-          cursorColor: "violet",
+          cursorColor: color_blue,
           loopSelection: true,
-          waveColor: "#211027",
-          progressColor: "#69207F",
+          waveColor: color_white,
+          progressColor: color_cyan,
           responsive: true,
           interact: false,
-
+          height: 200,
           plugins: [
             TimelinePlugin.create({
               container: "#wave-timeline",
