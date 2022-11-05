@@ -3,18 +3,21 @@ import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js
 import { FileContext } from "../../contexts/index";
 import wavesurfer from "wavesurfer.js";
 import "./style.css";
-import { color_white } from "../../globals/constants/constants";
-import { color_cyan } from "../../globals/constants/constants";
-import { color_blue } from "../../globals/constants/constants";
+import {
+  color_cyan,
+  color_blue,
+  color_black,
+  color_white,
+} from "../../globals/constants/constants";
 
 const AudioWaveform = () => {
   const wavesurferRef = useRef(null);
   const timelineRef = useRef(null);
 
-  // fetch file url from the context
-  const { fileURL } = useContext(FileContext);
+  // fetch files from the context
+  const { inputFileUrl, processedFileUrl } = useContext(FileContext);
 
-  // crate an instance of the wavesurfer
+  // create an instance of the wavesurfer
   const [wavesurferObj, setWavesurferObj] = useState();
 
   const [playing, setPlaying] = useState(true); // to keep track whether audio is currently playing or not
@@ -30,7 +33,7 @@ const AudioWaveform = () => {
           container: "#waveform",
           scrollParent: true,
           autoCenter: true,
-          cursorColor: color_blue,
+          cursorColor: color_black,
           loopSelection: true,
           waveColor: color_white,
           progressColor: color_cyan,
@@ -49,10 +52,10 @@ const AudioWaveform = () => {
 
   // once the file URL is ready, load the file to produce the waveform
   useEffect(() => {
-    if (fileURL && wavesurferObj) {
-      wavesurferObj.load(fileURL);
+    if (inputFileUrl && wavesurferObj) {
+      wavesurferObj.load(inputFileUrl);
     }
-  }, [fileURL, wavesurferObj]);
+  }, [inputFileUrl, wavesurferObj]);
 
   useEffect(() => {
     if (wavesurferObj) {

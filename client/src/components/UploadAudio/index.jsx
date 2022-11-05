@@ -4,26 +4,27 @@ import "./style.css";
 import axios from "../../globals/API/axios";
 
 const UploadAudio = () => {
-  const inputFile = useRef(null);
-  const { fileURL, setFileURL } = useContext(FileContext);
+  const inputFileRef = useRef(null);
+  const { setInputFileUrl, setProcessedFileUrl } = useContext(FileContext);
+
   const [file, setFile] = useState();
 
   useEffect(() => {
     if (file) {
-      setFileURL(file);
+      setInputFileUrl(URL.createObjectURL(file));
+      setProcessedFileUrl(URL.createObjectURL(file));
     }
-  }, [file, setFileURL]);
+  }, [file]);
 
   const handleButtonClick = () => {
-    inputFile.current.click();
+    inputFileRef.current.click();
   };
 
   const handleFileUpload = async (e) => {
-    // console.log(file);
-    setFile(URL.createObjectURL(e.target.files[0]));
-    const formData = new FormData();
+    setFile(e.target.files[0]);
 
-		formData.append('file', e.target.files[0]);
+    const formData = new FormData();
+    formData.append("file", e.target.files[0]);
 
     const response = await axios
       .post("/upload", formData)
@@ -45,8 +46,7 @@ const UploadAudio = () => {
       <input
         type="file"
         id="file"
-        name="file"
-        ref={inputFile}
+        ref={inputFileRef}
         style={{ display: "none" }}
         accept="audio/*"
         onChange={handleFileUpload}

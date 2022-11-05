@@ -3,9 +3,17 @@ import React, { createContext, useState } from "react";
 export const FileContext = createContext();
 
 export const FileContextProvider = ({ children }) => {
-  const [fileURL, setFileURL] = useState("");
+  const [inputFileUrl, setInputFileUrl] = useState("");
+  const [processedFileUrl, setProcessedFileUrl] = useState("");
   return (
-    <FileContext.Provider value={{ fileURL, setFileURL }}>
+    <FileContext.Provider
+      value={{
+        processedFileUrl,
+        setProcessedFileUrl,
+        inputFileUrl,
+        setInputFileUrl,
+      }}
+    >
       {children}
     </FileContext.Provider>
   );
