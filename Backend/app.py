@@ -7,7 +7,7 @@ import librosa
 from scipy.io.wavfile import write
 from werkzeug.utils import secure_filename
 
-FILE_FOLDER = 'D:\SBME\Equalizer-Pro\Backend\samples'
+FILE_FOLDER = '.\samples'
 
 
 app = Flask(__name__)
