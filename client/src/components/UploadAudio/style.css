@@ -1,7 +1,7 @@
 /* style for the upload audio component */
 .upload-audio {
     width: 100%;
-    margin-top: 5vh;
+    /* margin-top: 1rem; */
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
@@ -9,16 +9,16 @@
   }
   
   .upload-audio i.audio-icon {
-    font-size: 5em;
+    font-size: 5rem;
   }
   
 
   /* style for the upload button */
 button.upload-btn {
-    width: 10em;
-    font-size: 1em;
+    width: 7rem;
+    font-size: 0.9rem;
     font-family: var(--font-poppin);
-    padding: 0.5em;
+    padding: 0.5rem;
     background: var(--color_cyan);
     border-radius: 10px;
     border-color:  transparent;
@@ -31,6 +31,8 @@ button.upload-btn {
     /* filter: brightness(1.1); */
     background: transparent;
     border-color: var(--color_white);
+    font-size: 0.93rem;
+
   }
 
   @media screen and (max-width: 430px) {

@@ -2,12 +2,12 @@
 /* style for the navbar */
 nav {
     display: flex;
-    align-items: center;
-    height: 3.5em;
-    padding: 0 2em;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 4.5rem;
+    padding: 0 2rem 1rem 2rem;
     background-color: var(--color_grey);
     color: white;
-    font-size: large;
     font-weight: bold;
   }
   
@@ -16,18 +16,25 @@ nav {
     color: white;
     align-items: center;
   }
+
+
+  nav>.uploadBtn {
+    display: flex;
+    color: white;
+    align-items: center;
+  }
   
   nav a {
     text-decoration: none;
     color: inherit;
-    font-size: 1.5rem;
-    padding-top:0.5rem;
+    font-size: 1.3rem;
+    padding-top: 0.4rem;
 
   }
 
   nav .logo {
     padding-right:1rem;
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
   
 

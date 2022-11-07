@@ -34,7 +34,7 @@ const AudioWaveform = () => {
   const [volume, setVolume] = useState(1);
 
   // to control the zoom level of the waveform
-  const [zoom, setZoom] = useState(100);
+  const [zoom, setZoom] = useState(50);
 
   ////////////////////////////////// End Initialization //////////////////////////////////
 
@@ -55,7 +55,8 @@ const AudioWaveform = () => {
           progressColor: color_cyan,
           responsive: true,
           interact: false,
-          height: 150,
+          height: 250,
+          // maxCanvasWidth: 200,
           plugins: [
             // timeline below the waveform
             TimelinePlugin.create({
@@ -82,7 +83,9 @@ const AudioWaveform = () => {
           progressColor: color_cyan,
           responsive: true,
           interact: false,
-          height: 150,
+          height: 250,
+          maxCanvasWidth: 200,
+
           plugins: [
             // timeline below the waveform
             TimelinePlugin.create({

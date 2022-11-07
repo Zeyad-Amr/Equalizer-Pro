@@ -5,10 +5,7 @@ import "./style.css";
 
 const Body = () => {
   return (
-    <div>
-      <UploadAudio />
-      <br />
-      <br />
+    <div className="audioComponent">
       <AudioWaveform />
     </div>
   );

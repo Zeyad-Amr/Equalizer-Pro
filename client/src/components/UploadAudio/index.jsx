@@ -33,7 +33,6 @@ const UploadAudio = () => {
         console.log(response);
         setFile(e.target.files[0]);
         setProcessedFileUrl(response.data.file_url);
-
       })
       .catch((e) => {
         console.log("Error", e);
@@ -48,6 +47,7 @@ const UploadAudio = () => {
 
       <input
         type="file"
+        accept="audio/*"
         id="file"
         ref={inputFileRef}
         style={{ display: "none" }}
