@@ -1,23 +1,29 @@
-import pandas as pd 
 import numpy as np 
 import matplotlib.pylab as plt
 import librosa
 import librosa.display
-import IPython.display as ipd
-from playsound import playsound
-from scipy.fft import fft, fftfreq, ifft
+from IPython.display import Audio
 from scipy.io.wavfile import write
-y,sr = librosa.load('2MG.wav') #reading the audio file
-duartion = 1/float(sr) # T_sample 
-t_seq = np.arange(0,len(y) / float(sr),duartion) #x_axis
-Y_fourier = fft(y) #fourier transform
-sig_fft_filtered = Y_fourier.copy() 
-cut_off = 33 # cutoff freq , elemenate everything behind it
-sig_fft_filtered[t_seq < cut_off] = 0 #filter
-filtered = ifft(sig_fft_filtered) #هنا بقي الجزء البايظ :(
-data = np.real(filtered) 
-hehe =write("example.wav", sr, data.astype(np.int16)) #exporting the filtered data as wav 
-plt.plot(t_seq,np.abs(sig_fft_filtered))#plotting in fft
-#plt.plot(t_seq , np.abs(Y_fourier)) #whole fft plotting
-#plt.plot(t_seq,y) #normal plotting
-plt.show()
+y,sr = librosa.load('2MG.wav') #read the audio 
+duartion = 1/float(sr) 
+Yfft = np.fft.fft(y) / len(y) 
+Yfft = Yfft[:len(Yfft)//2] 
+#t_seq = np.arange(0,len(y) / float(sr),duartion) #x_axis in time domain
+#freqs = np.arange(0,len(Yfft) / float(sr),duartion) #x_axis in freq domain
+Fact_mode1 = np.array([1,1,1,1,1,1,1,1,1,1]) # هنا بقي المفروض كل اليمنت يعبر عن فاكتر مود1????????
+def Slider_Num(n): #get the number of sliders 
+    slider = np.array_split(Yfft,n)
+    return slider 
+def Factor_mode1(n): #Factor for mode1
+    get_Slider= Slider_Num(n)
+    for i in range(0,n):
+        get_Slider[i] = get_Slider[i]/ Fact_mode1[i]
+    return get_Slider
+def Real(n): # inverse fft
+    get_factor = Factor_mode1(n)
+    oneArray = np.concatenate(get_factor)
+    inverse = np.fft.ifft(oneArray)
+    real_inverse = (np.real(inverse)*len(y))
+    real_inverse_Float = real_inverse.astype('float32')
+    return real_inverse_Float
+NewAudio  =write("New.wav",np.int0(sr/2), Real(4)) # to export the new audio as wav file
