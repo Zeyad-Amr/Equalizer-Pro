@@ -34,7 +34,7 @@ const AudioWaveform = () => {
   const [volume, setVolume] = useState(1);
 
   // to control the zoom level of the waveform
-  const [zoom, setZoom] = useState(20000);
+  const [zoom, setZoom] = useState(100);
 
   ////////////////////////////////// End Initialization //////////////////////////////////
 
@@ -156,7 +156,7 @@ const AudioWaveform = () => {
   // whenever volume variable in state is changed
   useEffect(() => {
     if (wavesurferObj) {
-      wavesurferObj.setVolume(volume);
+      wavesurferObj.setVolume(0);
     }
   }, [volume, wavesurferObj]);
 

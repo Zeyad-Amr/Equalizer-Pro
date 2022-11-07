@@ -21,8 +21,6 @@ const UploadAudio = () => {
   };
 
   const handleFileUpload = async (e) => {
-    setFile(e.target.files[0]);
-
     const formData = new FormData();
     formData.append("file", e.target.files[0]);
 
@@ -34,6 +32,7 @@ const UploadAudio = () => {
       .then((response) => {
         console.log("Success");
         console.log(response);
+        setFile(e.target.files[0]);
       })
       .catch((e) => {
         console.log("Error", e);
