@@ -7,7 +7,7 @@ import {
   color_cyan,
   color_black,
   color_white,
-} from "../../globals/constants/constants";
+} from "../../globals/constants/colors";
 
 const AudioWaveform = () => {
   ////////////////////////////////// Start Initialization //////////////////////////////////

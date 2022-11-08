@@ -1,0 +1,42 @@
+export const musicModeSliders = [
+  {
+    id: 0,
+    label: "Drums",
+    min: 0,
+    max: 100,
+    step: 1,
+    value: 50,
+  },
+  {
+    id: 1,
+    label: "Jazz",
+    min: 0,
+    max: 100,
+    step: 1,
+    value: 50,
+  },
+  {
+    id: 2,
+    label: "Piano",
+    min: 0,
+    max: 100,
+    step: 1,
+    value: 50,
+  },
+  {
+    id: 3,
+    label: "Guitar",
+    min: 0,
+    max: 100,
+    step: 1,
+    value: 50,
+  },
+  {
+    id: 4,
+    label: "Violin",
+    min: 0,
+    max: 100,
+    step: 1,
+    value: 50,
+  },
+];
