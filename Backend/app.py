@@ -2,6 +2,8 @@ from flask import Flask, request, send_from_directory
 from flask_cors import CORS
 import os.path
 
+from numpy import double
+
 import audiotest
 
 FILE_FOLDER = '.\samples'
@@ -24,10 +26,15 @@ def upload_file():
     if "file" not in request.files:
         return {"there is an error": 'err'}, 400
 
-    # print(request)
+    # print(request.form)
     file = request.files["file"]
-    values = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-    # values = request.get_json["values"]
+    values = []
+    # values = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    valuesStr = request.form["values"]
+    if valuesStr:
+        valuesStrArray = valuesStr.split(",")
+        for value in valuesStrArray:
+            values.append(float(value))
 
     if not allowed_file(file.filename):
         return {"err": "File format is not accepted"}, 400
