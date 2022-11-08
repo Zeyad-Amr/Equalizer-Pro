@@ -24,9 +24,10 @@ def upload_file():
     if "file" not in request.files:
         return {"there is an error": 'err'}, 400
 
-    print(request)
+    # print(request)
     file = request.files["file"]
-    values = request.get_json["values"]
+    values = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    # values = request.get_json["values"]
 
     if not allowed_file(file.filename):
         return {"err": "File format is not accepted"}, 400

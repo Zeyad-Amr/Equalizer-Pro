@@ -18,7 +18,7 @@ from scipy.io.wavfile import write
 # Fact_mode1 = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 
 
-def Real(n, yfft, y):  # inverse fft
+def Real(n, yfft, y, Fact_mode1):  # inverse fft
 
     slider = np.array_split(yfft, n)
 

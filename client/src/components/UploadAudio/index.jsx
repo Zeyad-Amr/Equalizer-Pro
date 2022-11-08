@@ -28,13 +28,19 @@ const UploadAudio = () => {
     formData.append("file", e.target.files[0]);
 
     console.log(formData);
-    // console.log(e.target.files[0]);
+    console.log(currentSlidersList);
 
+    const values = [];
+    currentSlidersList.map((e) => {
+      values.push(parseInt(e.value) / 100);
+    });
+    console.log(values);
+    formData.append("values", values);
     const response = await axios
-      .post("/upload", { formData, values: currentSlidersList })
+      .post("/upload", formData)
       .then((response) => {
         console.log("Success");
-        console.log(response);
+        console.log(response.request);
         setFile(e.target.files[0]);
         setProcessedFileUrl(response.data.file_url);
       })
