@@ -6,8 +6,8 @@ from IPython.display import Audio
 from scipy.io.wavfile import write
 y,sr = librosa.load('Coldplay .wav') #read the audio
 duartion = 1/float(sr) 
-Yfft = np.fft.fft(y) / len(y) 
-Yfft = Yfft[:len(Yfft)//2] 
+Yfft = np.fft.rfft(y) / len(y) 
+#Yfft = Yfft[:len(Yfft)//2] 
 
 #t_seq = np.arange(0,len(y) / float(sr),duartion) #x_axis in time domain
 #freqs = np.arange(0,len(Yfft) / float(sr),duartion) #x_axis in freq domain
@@ -24,7 +24,7 @@ def Factor_mode1(n): #Factor for mode1
 def Real(n): # inverse fft
     get_factor = Factor_mode1(n)
     oneArray = np.concatenate(get_factor)
-    inverse = np.fft.ifft(oneArray)
+    inverse = np.fft.irfft(oneArray)
     real_inverse = (np.real(inverse) * len(y))
     real_inverse_Float = real_inverse.astype('float32')
     return real_inverse_Float
