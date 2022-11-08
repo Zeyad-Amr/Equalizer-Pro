@@ -19,16 +19,27 @@ const UploadAudio = () => {
     }
   }, [file]);
 
+  // normalizing the sliders values
+  function get_values() {
+    const values = [];
+    currentSlidersList.map((e) => {
+      if (parseInt(e.value) <= 50 && parseInt(e.value) >= 1) {
+        values.push(0.98 * parseInt(e.value) + 1);
+      } else {
+        values.push(0.02 * parseInt(e.value) + 1);
+      }
+    });
+    return values;
+  }
   const handleButtonClick = () => {
     inputFileRef.current.click();
   };
 
   const handleFileUpload = async (e) => {
     const formData = new FormData();
-    const values = [];
-    currentSlidersList.map((e) => {
-      values.push(parseInt(e.value) / 50);
-    });
+
+    const values = get_values();
+    console.log(values);
 
     formData.append("file", e.target.files[0]);
     formData.append("values", values);

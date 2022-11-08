@@ -5,13 +5,18 @@
     height: 15rem;
     padding: 1rem;
     
+    
+    
+}
+.slider-container >p{
+    font-size: 0.9rem;
 }
 
 .slider-container .range-slider{
     position: relative;
     z-index: 3;
     appearance: none;
-    margin: 0;
+    margin-left: -0.25rem;
     width: 15rem;
     height: 1.4rem;
     outline: none;

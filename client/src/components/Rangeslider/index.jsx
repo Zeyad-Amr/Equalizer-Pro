@@ -5,9 +5,7 @@ const RangeSlider = ({ element, index, handle_on_change_slider }) => {
   return (
     <div className="middle">
       <div className="slider-container">
-        <span className="bar">
-          <span className="fill"></span>
-        </span>
+        <p>{element.value}</p>
         <input
           type={"range"}
           id="{element.id}"
