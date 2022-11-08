@@ -40,4 +40,4 @@ def modify_file(file, values):
     duartion = 1/float(sr)
     Yfft = np.fft.rfft(y) / len(y)
     # Yfft = Yfft[:len(Yfft)//2]
-    return write("./samples/modified.wav", np.int0(sr), Real(10, Yfft, y, values))
+    return write("./samples/modified.wav", np.int0(sr), Real(len(values), Yfft, y, values))

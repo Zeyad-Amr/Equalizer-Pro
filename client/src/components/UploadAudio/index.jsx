@@ -25,24 +25,20 @@ const UploadAudio = () => {
 
   const handleFileUpload = async (e) => {
     const formData = new FormData();
-    formData.append("file", e.target.files[0]);
-
-    console.log(formData);
-    console.log(currentSlidersList);
-
     const values = [];
     currentSlidersList.map((e) => {
-      values.push(parseInt(e.value) / 100);
+      values.push(parseInt(e.value) / 50);
     });
-    console.log(values);
+
+    formData.append("file", e.target.files[0]);
     formData.append("values", values);
+
     const response = await axios
       .post("/upload", formData)
-      .then((response) => {
+      .then((res) => {
         console.log("Success");
-        console.log(response.request);
         setFile(e.target.files[0]);
-        setProcessedFileUrl(response.data.file_url);
+        setProcessedFileUrl(res.data.file_url);
       })
       .catch((e) => {
         console.log("Error", e);
