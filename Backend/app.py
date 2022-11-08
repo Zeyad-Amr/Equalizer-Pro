@@ -21,6 +21,16 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+# values = []
+
+
+def map_values(valurArr, valuesStr):
+    if valuesStr:
+        valuesStrArray = valuesStr.split(",")
+        for value in valuesStrArray:
+            valurArr.append(float(value))
+
+
 @app.route("/api/upload", methods=['POST'])
 def upload_file():
     if "file" not in request.files:
@@ -30,10 +40,7 @@ def upload_file():
     file = request.files["file"]
     values = []
     valuesStr = request.form["values"]
-    if valuesStr:
-        valuesStrArray = valuesStr.split(",")
-        for value in valuesStrArray:
-            values.append(float(value))
+    map_values(values, valuesStr)
 
     if not allowed_file(file.filename):
         return {"err": "File format is not accepted"}, 400
@@ -45,10 +52,17 @@ def upload_file():
     return {"file_url": "http://127.0.0.1:5000/api/file/" + file.filename}, 200
 
 
-@app.route('/api/file/<file_name>', methods=['GET'])
+@app.route('/api/file/<file_name>', methods=['GET', 'POST'])
 def file(file_name):
-    # completeName = os.path.join(FILE_FOLDER, file_name)
-    return send_from_directory(directory=app.config['FILE_FOLDER'], path="modified.wav")
+    completeName = os.path.join(FILE_FOLDER, file_name)
+    if request.method == 'GET':
+        return send_from_directory(directory=app.config['FILE_FOLDER'], path="modified.wav")
+    if request.method == 'POST':
+        values = []
+        valuesStr = request.form["values"]
+        map_values(values, valuesStr)
+        audiotest.modify_file(completeName, values)
+        return {"message": "Values updated"}, 200
 
 
 if __name__ == '__main__':
