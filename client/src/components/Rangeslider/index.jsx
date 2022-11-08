@@ -5,7 +5,7 @@ const RangeSlider = ({ element, index, handle_on_change_slider }) => {
   return (
     <div className="middle">
       <div className="slider-container">
-        <p>{element.value}</p>
+        <p className="slider-value">{element.value}</p>
         <input
           type={"range"}
           id="{element.id}"
@@ -17,6 +17,7 @@ const RangeSlider = ({ element, index, handle_on_change_slider }) => {
           value={element.value}
           onChange={(event) => handle_on_change_slider(event, index)}
         ></input>
+        <p className="label">{element.label}</p>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import {
 } from "../../globals/constants/modesSlider";
 import RangeSlider from "../RangeSlider/index";
 import { AppContext } from "../../contexts/index";
-const SlidersBar = () => {
+const SlidersBar = ({ mode }) => {
   // init use state for sliders list
   const [slidersList, setSlidersList] = useState([]);
 
@@ -17,11 +17,11 @@ const SlidersBar = () => {
   // init sliders list
   // according to the current mode
   useEffect(() => {
-    if (currentMode == 0) {
+    if (mode == 0) {
       setSlidersList(freqModeSliders);
-    } else if (currentMode == 1) {
+    } else if (mode == 1) {
       setSlidersList(vowelsModeSliders);
-    } else if (currentMode == 2) {
+    } else if (mode == 2) {
       setSlidersList(musicModeSliders);
     }
   }, []);

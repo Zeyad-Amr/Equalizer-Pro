@@ -35,28 +35,27 @@ const UploadAudio = () => {
   const handleButtonClick = () => {
     inputFileRef.current.click();
   };
-  const handleEditButtonClick = async () => {
-    const formData = new FormData();
-    const values = get_values()
-    console.log(values);
-    formData.append("values", values);
-    try {
-      const response = await axios.post(`/file/${file.name}`, formData)
-      setProcessedFileUrl(`http://localhost:5000/api/file/${file.name}`);
-      console.log(response);
-
-    } catch (error) {
-      console.log("Error", error)
-    }
-  };
+  // const handleEditButtonClick = async () => {
+  //   const formData = new FormData();
+  //   const values = get_values();
+  //   console.log(values);
+  //   formData.append("values", values);
+  //   try {
+  //     const response = await axios.post(`/file/${file.name}`, formData);
+  //     setProcessedFileUrl(`http://localhost:5000/api/file/${file.name}`);
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.log("Error", error);
+  //   }
+  // };
 
   // handle on upload file
   const handleFileUpload = async (e) => {
     const formData = new FormData();
-    
+
     const values = get_values();
     console.log(values);
-    
+
     formData.append("file", e.target.files[0]);
     formData.append("values", values);
 
@@ -77,9 +76,6 @@ const UploadAudio = () => {
     <div className="upload-audio">
       <button className="upload-btn upload" onClick={handleButtonClick}>
         Upload
-      </button>
-      <button className="upload-btn edit" onClick={handleEditButtonClick}>
-        edit
       </button>
 
       <input
