@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { FileContext } from "../../contexts/index";
+import { AppContext } from "../../contexts/index";
 import "./style.css";
 import axios from "../../globals/API/axios";
 
@@ -9,7 +9,7 @@ const UploadAudio = () => {
     setInputFileUrl,
     setProcessedFileUrl,
     currentSlidersList,
-  } = useContext(FileContext);
+  } = useContext(AppContext);
 
   const [file, setFile] = useState();
 
@@ -31,10 +31,12 @@ const UploadAudio = () => {
     });
     return values;
   }
+  // force input clicking
   const handleButtonClick = () => {
     inputFileRef.current.click();
   };
 
+  // handle on upload file
   const handleFileUpload = async (e) => {
     const formData = new FormData();
 

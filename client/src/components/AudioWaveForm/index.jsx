@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js";
-import { FileContext } from "../../contexts/index";
+import { AppContext } from "../../contexts/index";
 import wavesurfer from "wavesurfer.js";
 import "./style.css";
 import {
@@ -19,7 +19,7 @@ const AudioWaveform = () => {
   const timelineRef = useRef(null);
 
   // fetch files from the context
-  const { inputFileUrl, processedFileUrl } = useContext(FileContext);
+  const { inputFileUrl, processedFileUrl } = useContext(AppContext);
 
   // create an instance of the wavesurfer
   const [wavesurferObj, setWavesurferObj] = useState();

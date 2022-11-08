@@ -29,7 +29,6 @@ def upload_file():
     # print(request.form)
     file = request.files["file"]
     values = []
-    # values = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     valuesStr = request.form["values"]
     if valuesStr:
         valuesStrArray = valuesStr.split(",")

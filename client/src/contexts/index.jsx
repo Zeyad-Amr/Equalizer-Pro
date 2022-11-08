@@ -1,6 +1,6 @@
 import React, { createContext, useState } from "react";
 import { freqModeSliders } from "../globals/constants/modesSlider";
-export const FileContext = createContext();
+export const AppContext = createContext();
 
 export const FileContextProvider = ({ children }) => {
   const [inputFileUrl, setInputFileUrl] = useState("");
@@ -8,7 +8,7 @@ export const FileContextProvider = ({ children }) => {
   const [currentSlidersList, setCurrentSlidersList] = useState(freqModeSliders);
   const [currentMode, setcurrentMode] = useState(0);
   return (
-    <FileContext.Provider
+    <AppContext.Provider
       value={{
         processedFileUrl,
         setProcessedFileUrl,
@@ -21,6 +21,6 @@ export const FileContextProvider = ({ children }) => {
       }}
     >
       {children}
-    </FileContext.Provider>
+    </AppContext.Provider>
   );
 };

@@ -6,13 +6,13 @@ import {
   vowelsModeSliders,
 } from "../../globals/constants/modesSlider";
 import RangeSlider from "../RangeSlider/index";
-import { FileContext } from "../../contexts/index";
+import { AppContext } from "../../contexts/index";
 const SlidersBar = () => {
   // init use state for sliders list
   const [slidersList, setSlidersList] = useState([]);
 
   // init context value
-  const { currentMode, setCurrentSlidersList } = useContext(FileContext);
+  const { currentMode, setCurrentSlidersList } = useContext(AppContext);
 
   // init sliders list
   // according to the current mode
