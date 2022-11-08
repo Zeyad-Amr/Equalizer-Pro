@@ -7,7 +7,9 @@ import librosa
 from scipy.io.wavfile import write
 from werkzeug.utils import secure_filename
 
-FILE_FOLDER = './samples'
+import audiotest
+
+FILE_FOLDER = '.\samples'
 
 
 app = Flask(__name__)
@@ -35,12 +37,14 @@ def upload_file():
     completeName = os.path.join(FILE_FOLDER, file.filename)
     file.save(completeName)
 
+    audiotest.modify_file(completeName)
     return {"file_url": "http://127.0.0.1:5000/api/file/" + file.filename}, 200
 
 
 @app.route('/api/file/<file_name>', methods=['GET'])
 def file(file_name):
-    return send_from_directory(directory=app.config['FILE_FOLDER'], path=file_name)
+    # completeName = os.path.join(FILE_FOLDER, file_name)
+    return send_from_directory(directory=app.config['FILE_FOLDER'], path="modified.wav")
 
 
 if __name__ == '__main__':

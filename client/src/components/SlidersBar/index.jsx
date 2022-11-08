@@ -1,27 +1,48 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./style.css";
-import { musicModeSliders } from "../../globals/constants/modesSlider";
+import {
+  musicModeSliders,
+  freqModeSliders,
+  vowelsModeSliders,
+} from "../../globals/constants/modesSlider";
 import RangeSlider from "../RangeSlider/index";
+import { FileContext } from "../../contexts/index";
 const SlidersBar = () => {
-  // use state for sliders list
+  // init use state for sliders list
   const [slidersList, setSlidersList] = useState([]);
 
+  // init context value
+  const { currentMode, setCurrentSlidersList } = useContext(FileContext);
+
   // init sliders list
+  // according to the current mode
   useEffect(() => {
-    setSlidersList(musicModeSliders);
+    if (currentMode == 0) {
+      setSlidersList(freqModeSliders);
+    } else if (currentMode == 1) {
+      setSlidersList(vowelsModeSliders);
+    } else if (currentMode == 2) {
+      setSlidersList(musicModeSliders);
+    }
   }, []);
 
   // onchange slider values handling
   const handle_on_change_slider = (event, index) => {
     // cloning tbe slider list
     const newSliderList = [...slidersList];
+
     // changing slider value by index
     newSliderList[index].value = event.target.value;
+
     // setting the new  value to local state
     setSlidersList(newSliderList);
+
+    //setting the new value to global state
+    setCurrentSlidersList(newSliderList);
   };
+
   return (
-    <div>
+    <div className="sliders-bar">
       {slidersList.map((element, index) => {
         return (
           <RangeSlider
