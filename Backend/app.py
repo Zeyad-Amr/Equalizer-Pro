@@ -1,11 +1,6 @@
-from flask import Flask, request, send_file, jsonify, send_from_directory
+from flask import Flask, request, send_from_directory
 from flask_cors import CORS
-
-import numpy as np
 import os.path
-import librosa
-from scipy.io.wavfile import write
-from werkzeug.utils import secure_filename
 
 import audiotest
 
@@ -29,7 +24,9 @@ def upload_file():
     if "file" not in request.files:
         return {"there is an error": 'err'}, 400
 
+    print(request)
     file = request.files["file"]
+    values = request.get_json["values"]
 
     if not allowed_file(file.filename):
         return {"err": "File format is not accepted"}, 400
@@ -37,7 +34,7 @@ def upload_file():
     completeName = os.path.join(FILE_FOLDER, file.filename)
     file.save(completeName)
 
-    audiotest.modify_file(completeName)
+    audiotest.modify_file(completeName, values)
     return {"file_url": "http://127.0.0.1:5000/api/file/" + file.filename}, 200
 
 

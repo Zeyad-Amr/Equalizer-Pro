@@ -2,13 +2,20 @@ import React from "react";
 import AudioWaveform from "../../components/AudioWaveForm/index";
 import SlidersBar from "../../components/SlidersBar";
 import "./style.css";
+import { Container, Row, Col } from "react-bootstrap";
 
 const Body = () => {
   return (
-    <div className="audioComponent">
-      <AudioWaveform />
-      <SlidersBar />
-    </div>
+    <Container fluid>
+      <Row>
+        <Col>
+          <AudioWaveform />
+        </Col>
+        <Col>
+          <SlidersBar />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

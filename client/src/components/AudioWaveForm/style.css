@@ -2,14 +2,14 @@
 /* the container where wavesurfer adds the audio waveform */
 .waveform-container {
     margin: 0 auto;
-    max-width: 80vw;
+    /* max-width: 80vw; */
   }
 
 
 /* all the button controls */
 div.all-controls {
     margin: 2em auto;
-    max-width: 60vw;
+    /* max-width: 60vw; */
     display: flex;
     align-items: center;
     justify-content: space-around;

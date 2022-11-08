@@ -15,7 +15,7 @@ from scipy.io.wavfile import write
 #     return get_Slider
 
 # هنا بقي المفروض كل اليمنت يعبر عن فاكتر مود1????????
-Fact_mode1 = np.array([2, 2, 2, 1, 1, 1, 1, 1, 1, -1])
+# Fact_mode1 = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 
 
 def Real(n, yfft, y):  # inverse fft
@@ -24,19 +24,20 @@ def Real(n, yfft, y):  # inverse fft
 
     get_factor = slider
     for i in range(0, n):
-        get_factor[i] = get_factor[i] / Fact_mode1[i]
+        get_factor[i] = get_factor[i] * Fact_mode1[i]
 
     oneArray = np.concatenate(get_factor)
-    inverse = np.fft.ifft(oneArray)
+    inverse = np.fft.irfft(oneArray)
     real_inverse = (np.real(inverse)*len(y))
     real_inverse_Float = real_inverse.astype('float32')
     return real_inverse_Float
 
-
 # to export the new audio as wav file
-def modify_file(file):
+
+
+def modify_file(file, values):
     y, sr = librosa.load(file)  # read the audio
     duartion = 1/float(sr)
-    Yfft = np.fft.fft(y) / len(y)
-    Yfft = Yfft[:len(Yfft)//2]
-    return write("./samples/modified.wav", np.int0(sr/2), Real(10, Yfft, y))
+    Yfft = np.fft.rfft(y) / len(y)
+    # Yfft = Yfft[:len(Yfft)//2]
+    return write("./samples/modified.wav", np.int0(sr), Real(10, Yfft, y, values))

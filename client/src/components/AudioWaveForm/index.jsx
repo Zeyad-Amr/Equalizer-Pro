@@ -55,7 +55,7 @@ const AudioWaveform = () => {
           progressColor: color_cyan,
           responsive: true,
           interact: false,
-          height: 250,
+          height: 200,
           // maxCanvasWidth: 200,
           plugins: [
             // timeline below the waveform
@@ -83,8 +83,7 @@ const AudioWaveform = () => {
           progressColor: color_cyan,
           responsive: true,
           interact: false,
-          height: 250,
-          maxCanvasWidth: 200,
+          height: 200,
 
           plugins: [
             // timeline below the waveform

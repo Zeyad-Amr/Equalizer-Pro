@@ -5,7 +5,11 @@ import axios from "../../globals/API/axios";
 
 const UploadAudio = () => {
   const inputFileRef = useRef(null);
-  const { setInputFileUrl, setProcessedFileUrl } = useContext(FileContext);
+  const {
+    setInputFileUrl,
+    setProcessedFileUrl,
+    currentSlidersList,
+  } = useContext(FileContext);
 
   const [file, setFile] = useState();
 
@@ -27,7 +31,7 @@ const UploadAudio = () => {
     // console.log(e.target.files[0]);
 
     const response = await axios
-      .post("/upload", formData)
+      .post("/upload", { formData, values: currentSlidersList })
       .then((response) => {
         console.log("Success");
         console.log(response);
