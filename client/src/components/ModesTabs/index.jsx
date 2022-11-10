@@ -5,7 +5,14 @@ import { Container, Row, Col } from "react-bootstrap";
 import SlidersBar from "../SlidersBar";
 import React, { useContext } from "react";
 import { AppContext } from "../../contexts";
+import {
+  musicModeSliders,
+  freqModeSliders,
+  vowelsModeSliders,
+} from "../../globals/constants/modesSlider";
 const ModesTabs = () => {
+  // init context value
+  const { setcurrentMode } = useContext(AppContext);
   return (
     <section className="project" id="project">
       <Container>
@@ -15,6 +22,15 @@ const ModesTabs = () => {
               variant="tabs"
               className="nav-pills mb-5 justify-content-center align-items-center"
               id="pills-tab"
+              onSelect={(selectedKey) => {
+                if (selectedKey === "freq") {
+                  setcurrentMode(0);
+                } else if (selectedKey === "vowels") {
+                  setcurrentMode(1);
+                } else if (selectedKey === "music") {
+                  setcurrentMode(2);
+                }
+              }}
             >
               <Nav.Item>
                 <Nav.Link eventKey="freq">Frequency</Nav.Link>

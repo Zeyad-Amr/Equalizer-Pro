@@ -14,6 +14,7 @@ const UploadAudio = () => {
   const [file, setFile] = useState();
 
   useEffect(() => {
+    console.log("new file" + file);
     if (file) {
       setInputFileUrl(URL.createObjectURL(file));
     }
