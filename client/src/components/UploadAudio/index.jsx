@@ -53,12 +53,8 @@ const UploadAudio = () => {
   // handle on upload file
   const handleFileUpload = async (e) => {
     const formData = new FormData();
-<<<<<<< HEAD
     console.log(URL.createObjectURL(e.target.files[0]));
     
-=======
-
->>>>>>> 4cb88b15f78992a49f11e29765a4be9ad08108a5
     const values = get_values();
     console.log(values);
 
