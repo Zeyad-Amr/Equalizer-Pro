@@ -23,14 +23,17 @@ def allowed_file(filename):
 
 
 # Convert values of frequencies as string to array of floats
-def map_values(valueArr, valuesStr):
+def map_values(valuesStr):
+    valueArr = []
     if valuesStr:
         valuesStrArray = valuesStr.split(",")
         for value in valuesStrArray:
             valueArr.append(float(value))
-
+    return valueArr
 
 # upload audio file to the server
+
+
 @app.route("/api/upload", methods=['POST'])
 def upload_file():
     if "file" not in request.files:
@@ -38,10 +41,8 @@ def upload_file():
 
     # print(request.form)
     file = request.files["file"]
-    values = []
     valuesStr = request.form["values"]
-    map_values(values, valuesStr)
-
+    values = map_values(valuesStr)
     if not allowed_file(file.filename):
         return {"err": "File format is not accepted"}, 400
 

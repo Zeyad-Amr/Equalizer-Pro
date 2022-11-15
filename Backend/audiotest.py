@@ -34,18 +34,12 @@ def dropFrequency(frequencies, magnitude, maxFreq, minFreq):
     return magnitude
 
 
-def Real(n, yfft, y, Fact_mode1):  # inverse fft
-    slider = np.array_split(yfft, n)
-
-    get_factor = slider
+def change_freqs(n, f_signal, factors):  # inverse fft
+    signalChunks = np.array_split(f_signal, n)
     for i in range(0, n):
-        get_factor[i] = get_factor[i] * Fact_mode1[i]
-
-    oneArray = np.concatenate(get_factor)
-    inverse = np.fft.irfft(oneArray)
-    real_inverse = (np.real(inverse)*len(y))
-    real_inverse_Float = real_inverse.astype('float32')
-    return real_inverse_Float
+        signalChunks[i] = signalChunks[i] * factors[i]
+    fullSignal = np.concatenate(signalChunks)
+    return fullSignal
 
 
 def remove_veowels(f_signal, freq, vowel):
@@ -70,7 +64,7 @@ def modify_file(file, mode, values=[]):
     f_signal, freq = fourier(signal, sr)
 
     if(mode == 1):
-        i_signal = Real(len(values), f_signal, signal, values)
+        i_signal = change_freqs(len(values), f_signal, values)
     elif(mode == 2):
         i_signal = remove_veowels(f_signal, freq, values[0])
 
