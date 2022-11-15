@@ -2,8 +2,6 @@ from flask import Flask, request, send_from_directory
 from flask_cors import CORS
 import os.path
 
-from numpy import double
-
 import audiotest
 
 AUDIO_FOLDER = '.\\files\samples'
@@ -23,9 +21,8 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
 # Convert values of frequencies as string to array of floats
-
-
 def map_values(valueArr, valuesStr):
     if valuesStr:
         valuesStrArray = valuesStr.split(",")
@@ -50,7 +47,7 @@ def upload_file():
 
     signalPath = os.path.join(AUDIO_FOLDER, file.filename)
     file.save(signalPath)
-    audiotest.modify_file(signalPath, 2, values=values)
+    audiotest.modify_file(signalPath, 1, values=values)
     return {"file_url": "http://127.0.0.1:5000/api/file/" + file.filename}, 200
 
 
@@ -71,21 +68,14 @@ def file(file_name):
 
 
 # Spectrograms images APIs
-@app.route('/api/spectrogram/<img>', methods=['GET', 'POST'])
+@app.route('/api/spectrogram/<img>', methods=['GET'])
 def spectrogram(img):
     signalPath = os.path.join(AUDIO_FOLDER, img)
     img = img.split('.')[0]
     # get the audio file
     if request.method == 'GET':
-        # audiotest.spectrogram(signalPath, img)
-        return send_from_directory(directory=app.config['IMG_FOLDER'], path='Spectrotest'+'.jpeg')
-    # # modify the audio file
-    # if request.method == 'POST':
-    #     values = []
-    #     valuesStr = request.form["values"]
-    #     map_values(values, valuesStr)
-    #     audiotest.modify_file(signalPath, values)
-    #     return {"message": "Values updated"}, 200
+        audiotest.spectrogram(signalPath, img)
+        return send_from_directory(directory=app.config['IMG_FOLDER'], path='spectro_' + img + '.png')
 
 
 if __name__ == '__main__':

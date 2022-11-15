@@ -78,17 +78,15 @@ def modify_file(file, mode, values=[]):
     save(modifiedSignal, sr)
 
 
-def spectrogram(signal, name):
+def spectrogram(signal, name=''):
     signal, sr = load_signal(signal)
-    fourierInverse(signal)
-
-    signalDb = librosa.amplitude_to_db(
-        np.abs(fourierInverse(signal)), ref=np.max)
+    f_signal = librosa.stft(signal)
+    signal_db = librosa.amplitude_to_db(np.abs(f_signal), ref=np.max)
+    # Plot the transformed audio data
     fig, ax = plt.subplots(figsize=(10, 5))
-    img = librosa.display.specshow(signalDb,
-                                   hop_length=sr,
+    img = librosa.display.specshow(signal_db,
                                    x_axis='time',
                                    y_axis='log',
                                    ax=ax)
     fig.colorbar(img, ax=ax, format=f'%0.2f')
-    plt.savefig('./files/images/spectro' + name+'.png')
+    plt.savefig('./files/images/spectro_' + name+'.png')
