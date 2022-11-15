@@ -9,12 +9,13 @@ const UploadAudio = () => {
     setInputFileUrl,
     setProcessedFileUrl,
     currentSlidersList,
+    setInputFile,
   } = useContext(AppContext);
 
   const [file, setFile] = useState();
 
   useEffect(() => {
-    console.log("new file" + file);
+    // console.log("new file" + file);
     if (file) {
       setInputFileUrl(URL.createObjectURL(file));
     }
@@ -39,38 +40,40 @@ const UploadAudio = () => {
   // const handleEditButtonClick = async () => {
   //   const formData = new FormData();
   //   const values = get_values();
-  //   console.log(values);
+  //   // console.log(values);
   //   formData.append("values", values);
   //   try {
   //     const response = await axios.post(`/file/${file.name}`, formData);
   //     setProcessedFileUrl(`http://localhost:5000/api/file/${file.name}`);
-  //     console.log(response);
+  //     // console.log(response);
   //   } catch (error) {
-  //     console.log("Error", error);
+  //     // console.log("Error", error);
   //   }
   // };
 
   // handle on upload file
   const handleFileUpload = async (e) => {
+    let inputFile = e.target.files[0]
     const formData = new FormData();
-    console.log(URL.createObjectURL(e.target.files[0]));
+    // // console.log(URL.createObjectURL(inputFile));
     
     const values = get_values();
-    console.log(values);
+    // // console.log(values);
 
-    formData.append("file", e.target.files[0]);
+    formData.append("file", inputFile);
     formData.append("values", values);
+    setInputFile(inputFile.name)
 
     const response = await axios
       .post("/upload", formData)
       .then((res) => {
-        console.log("Success");
-        console.log(e.target.files[0].name);
-        setFile(e.target.files[0]);
+        // console.log("Success");
+        // console.log(inputFile.name);
+        setFile(inputFile);
         setProcessedFileUrl(res.data.file_url);
       })
       .catch((e) => {
-        console.log("Error", e);
+        // console.log("Error", e);
       });
   };
 

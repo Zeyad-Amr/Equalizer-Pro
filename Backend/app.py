@@ -48,17 +48,16 @@ def upload_file():
     if not allowed_file(file.filename):
         return {"err": "File format is not accepted"}, 400
 
-    completeName = os.path.join(AUDIO_FOLDER, file.filename)
-    file.save(completeName)
-
-    audiotest.modify_file(completeName, values)
+    signalPath = os.path.join(AUDIO_FOLDER, file.filename)
+    file.save(signalPath)
+    audiotest.modify_file(signalPath, 2, values=values)
     return {"file_url": "http://127.0.0.1:5000/api/file/" + file.filename}, 200
 
 
 # audio file APIs
 @app.route('/api/file/<file_name>', methods=['GET', 'POST'])
 def file(file_name):
-    completeName = os.path.join(AUDIO_FOLDER, file_name)
+    signalPath = os.path.join(AUDIO_FOLDER, file_name)
     # get the audio file
     if request.method == 'GET':
         return send_from_directory(directory=app.config['AUDIO_FOLDER'], path="modified.wav")
@@ -67,23 +66,25 @@ def file(file_name):
         values = []
         valuesStr = request.form["values"]
         map_values(values, valuesStr)
-        audiotest.modify_file(completeName, values)
+        audiotest.modify_file(signalPath, values)
         return {"message": "Values updated"}, 200
 
 
 # Spectrograms images APIs
 @app.route('/api/spectrogram/<img>', methods=['GET', 'POST'])
 def spectrogram(img):
-    completeName = os.path.join(IMG_FOLDER, img)
+    signalPath = os.path.join(AUDIO_FOLDER, img)
+    img = img.split('.')[0]
     # get the audio file
     if request.method == 'GET':
-        return send_from_directory(directory=app.config['IMG_FOLDER'], path=img)
+        # audiotest.spectrogram(signalPath, img)
+        return send_from_directory(directory=app.config['IMG_FOLDER'], path='Spectrotest'+'.jpeg')
     # # modify the audio file
     # if request.method == 'POST':
     #     values = []
     #     valuesStr = request.form["values"]
     #     map_values(values, valuesStr)
-    #     audiotest.modify_file(completeName, values)
+    #     audiotest.modify_file(signalPath, values)
     #     return {"message": "Values updated"}, 200
 
 

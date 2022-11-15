@@ -1,5 +1,6 @@
 import React from "react";
 import AudioWaveform from "../../components/AudioWaveForm/index";
+import Spectro from "../../components/Spectro/index";
 import SlidersBar from "../../components/SlidersBar";
 import "./style.css";
 import { Container, Row, Col } from "react-bootstrap";
@@ -14,6 +15,10 @@ const Body = () => {
         <Col>
           <ModesTabs />
         </Col>
+      </Row>
+      <Row>
+        
+        <Spectro/>
       </Row>
     </Container>
   );
