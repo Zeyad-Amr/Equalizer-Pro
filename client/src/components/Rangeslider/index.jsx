@@ -10,11 +10,11 @@ const RangeSlider = ({ element, index, handle_on_change_slider }) => {
           type={"range"}
           id="{element.id}"
           className="range-slider"
-          name
           min={element.min}
           max={element.max}
           step={element.step}
           value={element.value}
+          list="tickmarks"
           onChange={(event) => handle_on_change_slider(event, index)}
         ></input>
         <p className="label">{element.label}</p>

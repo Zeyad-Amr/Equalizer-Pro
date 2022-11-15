@@ -34,7 +34,7 @@ const AudioWaveform = () => {
   const [volume, setVolume] = useState(1);
 
   // to control the zoom level of the waveform
-  const [zoom, setZoom] = useState(50);
+  const [zoom, setZoom] = useState(1);
 
   ////////////////////////////////// End Initialization //////////////////////////////////
 
@@ -55,10 +55,9 @@ const AudioWaveform = () => {
           progressColor: color_cyan,
           responsive: true,
           interact: false,
-          // height: 150,
-          // maxCanvasWidth: 200,
+          height: 100,
+
           plugins: [
-            // timeline below the waveform
             TimelinePlugin.create({
               container: "#wave-timeline",
             }),
@@ -83,10 +82,9 @@ const AudioWaveform = () => {
           progressColor: color_cyan,
           responsive: true,
           interact: false,
-          // height: 150,
+          height: 100,
 
           plugins: [
-            // timeline below the waveform
             TimelinePlugin.create({
               container: "#wave-timeline",
             }),
@@ -203,12 +201,8 @@ const AudioWaveform = () => {
     wavesurferObj.stop();
     wavesurferProcessedObj.stop();
 
-    //then play it again
-    wavesurferObj.play();
-    wavesurferProcessedObj.play();
-
     // to toggle the play/pause button icon
-    setPlaying(true);
+    setPlaying(false);
   };
 
   // set volume value to local state
@@ -252,7 +246,7 @@ const AudioWaveform = () => {
             <input
               type="range"
               min="1"
-              max="20000"
+              max="1000"
               value={zoom}
               onChange={handleZoomSlider}
               class="slider zoom-slider"
