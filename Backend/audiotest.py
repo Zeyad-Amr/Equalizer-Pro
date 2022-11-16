@@ -3,7 +3,7 @@ import librosa
 import librosa.display
 from scipy.io.wavfile import write
 import matplotlib.pyplot as plt
-
+import scipy
 
 def load_signal(path):
     Voice_samplerate = librosa.get_samplerate(path)
@@ -84,3 +84,72 @@ def spectrogram(signal, name=''):
                                    ax=ax)
     fig.colorbar(img, ax=ax, format=f'%0.2f')
     plt.savefig('./files/images/spectro_' + name+'.png')
+
+def musicalInstruments(frequency, fourier, slider1, slider2, slider3):
+    # Drum ranges
+    index = (frequency > 10) & (frequency < 500)
+    fourier[index] = fourier[index] * slider1 * scipy.signal.triang(len(fourier[index]))
+
+    index = (frequency > 500) & (frequency < 2000)
+    fourier[index] = fourier[index] * slider1 * scipy.signal.triang(len(fourier[index]))
+
+    # Trumpet ranges
+    index = (frequency > 1465) & (frequency < 1550)
+    fourier[index] = fourier[index] * slider2
+
+    index = (frequency > 2200) & (frequency < 2225)
+    fourier[index] = fourier[index] * slider2
+
+    index = (frequency > 730) & (frequency < 750)
+    fourier[index] = fourier[index] * slider2
+
+    index = (frequency > 2920) & (frequency < 3000)
+    fourier[index] = fourier[index] * slider2
+
+    index = (frequency > 3695) & (frequency < 3705)
+    fourier[index] = fourier[index] * slider2
+
+    index = (frequency > 0.5) & (frequency < 100)
+    fourier[index] = fourier[index] * slider2
+
+    index = (frequency > 7390) & (frequency < 7410)
+    fourier[index] = fourier[index] * slider2
+
+    index = (frequency > 4410) & (frequency < 4470)
+    fourier[index] = fourier[index] * slider2
+
+    index = (frequency > 6500)
+    fourier[index] = slider2 * fourier[index] * scipy.signal.triang(len(fourier[index]))
+
+    # Xylophone ranges
+    index = (frequency > 700) & (frequency < 1100)
+    fourier[index] = fourier[index] * slider3
+
+    index = (frequency > 850) & (frequency < 950)
+    fourier[index] = fourier[index] * slider3
+
+    index = (frequency > 4430) & (frequency < 4480)
+    fourier[index] = fourier[index] * slider3
+
+    index = (frequency > 5280) & (frequency < 5300)
+    fourier[index] = fourier[index] * slider3
+
+    index = (frequency > 6000)
+    fourier[index] = fourier[index] * slider3
+
+    index = (frequency < 6000) & (frequency > 4000)
+    fourier[index] = fourier[index] * slider3
+
+    index = (frequency > 3300) & (frequency < 3350)
+    fourier[index] = fourier[index] * slider3
+
+    index = (frequency < 40) & (frequency >= 0.5)
+    fourier[index] = fourier[index] * slider3
+
+    index = (frequency > 3690) & (frequency < 3690)
+    fourier[index] = slider3 * fourier[index] * scipy.signal.triang(len(fourier[index]))
+
+    index = (frequency > 3710) & (frequency < 4000)
+    fourier[index] = slider3 * fourier[index] * scipy.signal.triang(len(fourier[index]))
+
+    return fourier, frequency
