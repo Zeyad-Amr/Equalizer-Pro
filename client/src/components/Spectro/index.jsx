@@ -28,8 +28,10 @@ function Spectrogram() {
   return (
     <div>
         <button onClick={handleClick} className="spectrogram-btn">Spectrogram</button>
-        {showSpectrogram ? <p>Mo'men</p> : <p>Mohamed</p>}
-        <img src={`http://localhost:5000/api/spectrogram/${inputFile}`} alt="specto" />
+        
+        {showSpectrogram ? <img src={`http://localhost:5000/api/spectrogram/mod`} alt="specto" />
+         : <img src={`http://localhost:5000/api/spectrogram/${inputFile}`} alt="specto" />}
+        
     </div>
   )
 }

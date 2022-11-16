@@ -59,6 +59,12 @@ def remove_veowels(f_signal, freq, vowel):
     return f_signal
 
 
+def change_voice(signal, sr, value):  # voice change function
+    # n_steps is the value to be taken from slider
+    changedVoice = librosa.effects.pitch_shift(signal, sr, n_steps=value)
+    return changedVoice
+
+
 def modify_file(file, mode, values=[]):
     signal, sr = load_signal(file)
     f_signal, freq = fourier(signal, sr)
@@ -67,6 +73,10 @@ def modify_file(file, mode, values=[]):
         i_signal = change_freqs(len(values), f_signal, values)
     elif(mode == 2):
         i_signal = remove_veowels(f_signal, freq, values[0])
+    # elif(mode == 2):
+    #     i_signal = remove_veowels(f_signal, freq, values[0])
+    elif(mode == 4):
+        i_signal = change_voice(f_signal, sr, values[0])
 
     modifiedSignal = fourierInverse(i_signal)
     save(modifiedSignal, sr)
@@ -82,5 +92,6 @@ def spectrogram(signal, name=''):
                                    x_axis='time',
                                    y_axis='log',
                                    ax=ax)
+    ax.set_title(name)
     fig.colorbar(img, ax=ax, format=f'%0.2f')
     plt.savefig('./files/images/spectro_' + name+'.png')
