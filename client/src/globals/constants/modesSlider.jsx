@@ -175,3 +175,14 @@ export const musicModeSliders = [
     value: 0,
   },
 ];
+
+export const voiceChangerSliders = [
+  {
+    id: 0,
+    label: "Voice",
+    min: 1,
+    max: 4,
+    step: 1,
+    value: 0,
+  },
+];
