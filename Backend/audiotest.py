@@ -5,6 +5,7 @@ from scipy.io.wavfile import write
 import matplotlib.pyplot as plt
 import scipy
 
+
 def load_signal(path):
     Voice_samplerate = librosa.get_samplerate(path)
     signal, sr = librosa.load(path, sr=Voice_samplerate)
@@ -34,6 +35,7 @@ def dropFrequency(frequencies, magnitude, maxFreq, minFreq):
     return magnitude
 
 
+# Frequency mode
 def change_freqs(n, f_signal, factors):  # inverse fft
     signalChunks = np.array_split(f_signal, n)
     for i in range(0, n):
@@ -42,8 +44,9 @@ def change_freqs(n, f_signal, factors):  # inverse fft
     return fullSignal
 
 
-def remove_veowels(f_signal, freq, vowel):
-    def choise_vowel(argument):
+# vowels mode
+def remove_vowels(f_signal, freq, vowel):
+    def chose_vowel(argument):
         print(argument)
         switcher = {
             'a': 2400,  # Cut below 2400hz #works for ae Back,
@@ -54,11 +57,46 @@ def remove_veowels(f_signal, freq, vowel):
         return switcher.get(argument, -1)
     print(type(f_signal))
     print(type(freq))
-    f_signal[(np.abs(freq) < choise_vowel(vowel))] = 0
-    print(len(f_signal[(np.abs(freq) < choise_vowel(vowel))]))
+    f_signal[(np.abs(freq) < chose_vowel(vowel))] = 0
+    print(len(f_signal[(np.abs(freq) < chose_vowel(vowel))]))
     return f_signal
 
 
+# musical instruments mode
+def change_musical_instruments(frequency, fourier, values=[]):
+    def edit_amps(ranges, factor, triang=False):
+        for range in ranges:
+            if len(range) == 1:
+                index = (frequency > range[0])
+            else:
+                index = (frequency > range[0]) & (frequency < range[1])
+            if triang:
+                fourier[index] = fourier[index] * factor * \
+                    scipy.signal.triang(len(fourier[index]))
+            else:
+                fourier[index] = fourier[index] * factor
+
+    # Drum ranges
+    drumRanges = [[10, 500], [500, 200]]
+    edit_amps(drumRanges, values[0], triang=True)
+
+    # Trumpet ranges
+    trumpetRanges = [[0.5, 100], [730, 750], [1465, 1550], [2200, 2225], [
+        2920, 3000], [3695, 3705], [4410, 4470], [7390, 7410]]
+    edit_amps(trumpetRanges, values[1])
+    edit_amps([[6500]], values[1], triang=True)
+
+    # Xylophone ranges
+    XylophoneRanges = [[0.5, 40], [700, 1100], [850, 950],
+                       [3300, 3350], [4430, 4480], [4000, 6000], [6000]]
+    edit_amps(XylophoneRanges, values[2])
+    XylophoneTriangRanges = [[3690, 3690], [3710, 4000]]
+    edit_amps(XylophoneTriangRanges, values[2], triang=True)
+
+    return fourier, frequency
+
+
+# change voice mode
 def change_voice(signal, sr, value):  # voice change function
     # n_steps is the value to be taken from slider
     changedVoice = librosa.effects.pitch_shift(signal, sr, n_steps=value)
@@ -72,9 +110,9 @@ def modify_file(file, mode, values=[]):
     if(mode == 1):
         i_signal = change_freqs(len(values), f_signal, values)
     elif(mode == 2):
-        i_signal = remove_veowels(f_signal, freq, values[0])
-    # elif(mode == 2):
-    #     i_signal = remove_veowels(f_signal, freq, values[0])
+        i_signal = remove_vowels(f_signal, freq, values[0])
+    elif(mode == 3):
+        i_signal, _ = change_musical_instruments(freq, f_signal, values)
     elif(mode == 4):
         i_signal = change_voice(f_signal, sr, values[0])
 
@@ -95,72 +133,3 @@ def spectrogram(signal, name=''):
     ax.set_title(name)
     fig.colorbar(img, ax=ax, format=f'%0.2f')
     plt.savefig('./files/images/spectro_' + name+'.png')
-
-def musicalInstruments(frequency, fourier, slider1, slider2, slider3):
-    # Drum ranges
-    index = (frequency > 10) & (frequency < 500)
-    fourier[index] = fourier[index] * slider1 * scipy.signal.triang(len(fourier[index]))
-
-    index = (frequency > 500) & (frequency < 2000)
-    fourier[index] = fourier[index] * slider1 * scipy.signal.triang(len(fourier[index]))
-
-    # Trumpet ranges
-    index = (frequency > 1465) & (frequency < 1550)
-    fourier[index] = fourier[index] * slider2
-
-    index = (frequency > 2200) & (frequency < 2225)
-    fourier[index] = fourier[index] * slider2
-
-    index = (frequency > 730) & (frequency < 750)
-    fourier[index] = fourier[index] * slider2
-
-    index = (frequency > 2920) & (frequency < 3000)
-    fourier[index] = fourier[index] * slider2
-
-    index = (frequency > 3695) & (frequency < 3705)
-    fourier[index] = fourier[index] * slider2
-
-    index = (frequency > 0.5) & (frequency < 100)
-    fourier[index] = fourier[index] * slider2
-
-    index = (frequency > 7390) & (frequency < 7410)
-    fourier[index] = fourier[index] * slider2
-
-    index = (frequency > 4410) & (frequency < 4470)
-    fourier[index] = fourier[index] * slider2
-
-    index = (frequency > 6500)
-    fourier[index] = slider2 * fourier[index] * scipy.signal.triang(len(fourier[index]))
-
-    # Xylophone ranges
-    index = (frequency > 700) & (frequency < 1100)
-    fourier[index] = fourier[index] * slider3
-
-    index = (frequency > 850) & (frequency < 950)
-    fourier[index] = fourier[index] * slider3
-
-    index = (frequency > 4430) & (frequency < 4480)
-    fourier[index] = fourier[index] * slider3
-
-    index = (frequency > 5280) & (frequency < 5300)
-    fourier[index] = fourier[index] * slider3
-
-    index = (frequency > 6000)
-    fourier[index] = fourier[index] * slider3
-
-    index = (frequency < 6000) & (frequency > 4000)
-    fourier[index] = fourier[index] * slider3
-
-    index = (frequency > 3300) & (frequency < 3350)
-    fourier[index] = fourier[index] * slider3
-
-    index = (frequency < 40) & (frequency >= 0.5)
-    fourier[index] = fourier[index] * slider3
-
-    index = (frequency > 3690) & (frequency < 3690)
-    fourier[index] = slider3 * fourier[index] * scipy.signal.triang(len(fourier[index]))
-
-    index = (frequency > 3710) & (frequency < 4000)
-    fourier[index] = slider3 * fourier[index] * scipy.signal.triang(len(fourier[index]))
-
-    return fourier, frequency
