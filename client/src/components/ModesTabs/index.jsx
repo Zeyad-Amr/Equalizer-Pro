@@ -29,6 +29,8 @@ const ModesTabs = () => {
                   setcurrentMode(1);
                 } else if (selectedKey === "music") {
                   setcurrentMode(2);
+                } else if (selectedKey === "voice") {
+                  setcurrentMode(3);
                 }
               }}
             >
@@ -41,19 +43,25 @@ const ModesTabs = () => {
               <Nav.Item>
                 <Nav.Link eventKey="music">Music</Nav.Link>
               </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="voice">Voice Changer</Nav.Link>
+              </Nav.Item>
             </Nav>
             <Tab.Content
               id="slideInUp"
               className={"animate__animated animate__slideInUp"}
             >
               <Tab.Pane eventKey="freq">
-                <SlidersBar mode={0} />
+                <SlidersBar />
               </Tab.Pane>
               <Tab.Pane eventKey="vowels">
-                <SlidersBar mode={1} />
+                <SlidersBar />
               </Tab.Pane>
               <Tab.Pane eventKey="music">
-                <SlidersBar mode={2} />
+                <SlidersBar />
+              </Tab.Pane>
+              <Tab.Pane eventKey="voice">
+                <SlidersBar />
               </Tab.Pane>
             </Tab.Content>
           </Tab.Container>

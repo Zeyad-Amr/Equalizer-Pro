@@ -17,8 +17,7 @@ const Body = () => {
         </Col>
       </Row>
       <Row>
-        
-        <Spectro/>
+        <Spectro />
       </Row>
     </Container>
   );
