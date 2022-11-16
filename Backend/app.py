@@ -31,9 +31,8 @@ def map_values(valuesStr):
             valueArr.append(float(value))
     return valueArr
 
+
 # upload audio file to the server
-
-
 @app.route("/api/upload", methods=['POST'])
 def upload_file():
     if "file" not in request.files:
@@ -58,13 +57,14 @@ def file(file_name):
     signalPath = os.path.join(AUDIO_FOLDER, file_name)
     # get the audio file
     if request.method == 'GET':
+        # audiotest.modify_file(signalPath, 1, values=values)
         return send_from_directory(directory=app.config['AUDIO_FOLDER'], path="modified.wav")
     # modify the audio file
     if request.method == 'POST':
-        values = []
-        valuesStr = request.form["values"]
-        map_values(values, valuesStr)
-        audiotest.modify_file(signalPath, values)
+        body = request.get_json()
+        mode = body["mode"]
+        values = body["values"]
+        audiotest.modify_file(signalPath, mode, values)
         return {"message": "Values updated"}, 200
 
 
@@ -72,11 +72,16 @@ def file(file_name):
 @app.route('/api/spectrogram/<img>', methods=['GET'])
 def spectrogram(img):
     signalPath = os.path.join(AUDIO_FOLDER, img)
+    modifiedSignalPath = os.path.join(AUDIO_FOLDER, 'modified.wav')
     img = img.split('.')[0]
-    # get the audio file
     if request.method == 'GET':
-        audiotest.spectrogram(signalPath, img)
-        return send_from_directory(directory=app.config['IMG_FOLDER'], path='spectro_' + img + '.png')
+        print(img)
+        if(img == 'mod'):
+            audiotest.spectrogram(modifiedSignalPath, 'modified')
+            return send_from_directory(directory=app.config['IMG_FOLDER'], path='spectro_modified.png')
+        else:
+            audiotest.spectrogram(signalPath, img)
+            return send_from_directory(directory=app.config['IMG_FOLDER'], path='spectro_' + img + '.png')
 
 
 if __name__ == '__main__':
