@@ -22,12 +22,11 @@ const AudioWaveform = () => {
   const {
     inputFileUrl,
     processedFileUrl,
-    playing,
     setPlaying,
     volume,
-    setVolume,
+    volume2,
     zoom,
-    setZoom,
+    speed,
     wavesurferObj,
     setWavesurferObj,
     wavesurferProcessedObj,
@@ -53,7 +52,7 @@ const AudioWaveform = () => {
           progressColor: color_cyan,
           responsive: true,
           interact: false,
-          height: 100,
+          height: 250,
 
           plugins: [
             TimelinePlugin.create({
@@ -80,7 +79,7 @@ const AudioWaveform = () => {
           progressColor: color_cyan,
           responsive: true,
           interact: false,
-          height: 100,
+          height: 250,
 
           plugins: [
             TimelinePlugin.create({
@@ -140,7 +139,7 @@ const AudioWaveform = () => {
   // whenever volume variable in state is changed
   useEffect(() => {
     if (wavesurferObj) {
-      wavesurferObj.setVolume(0);
+      wavesurferObj.setVolume(volume);
     }
   }, [volume, wavesurferObj]);
 
@@ -148,9 +147,9 @@ const AudioWaveform = () => {
   // whenever volume variable in state is changed
   useEffect(() => {
     if (wavesurferProcessedObj) {
-      wavesurferProcessedObj.setVolume(volume);
+      wavesurferProcessedObj.setVolume(volume2);
     }
-  }, [volume, wavesurferProcessedObj]);
+  }, [volume2, wavesurferProcessedObj]);
 
   // set zoom level of the wavesurfer object
   //whenever the zoom variable in state is changed
@@ -167,6 +166,22 @@ const AudioWaveform = () => {
       wavesurferProcessedObj.zoom(zoom);
     }
   }, [zoom, wavesurferProcessedObj]);
+
+  // set speed level of the wavesurfer object
+  //whenever the zoom variable in state is changed
+  useEffect(() => {
+    if (wavesurferObj) {
+      wavesurferObj.setPlaybackRate(speed);
+    }
+  }, [speed, wavesurferObj]);
+
+  // set zoom level of the wavesurfer object
+  //whenever the zoom variable in state is changed
+  useEffect(() => {
+    if (wavesurferProcessedObj) {
+      wavesurferProcessedObj.setPlaybackRate(speed);
+    }
+  }, [speed, wavesurferProcessedObj]);
 
   ////////////////////////////////// End State Methods //////////////////////////////////
 

@@ -9,15 +9,18 @@ const Body = () => {
   return (
     <Container fluid>
       <Row>
-        <Col>
+        <Col xs={8}>
           <AudioWaveform />
         </Col>
+        <Col xs={4}>
+          <Spectro />
+        </Col>
+      </Row>
+
+      <Row>
         <Col>
           <ModesTabs />
         </Col>
-      </Row>
-      <Row>
-        <Spectro />
       </Row>
     </Container>
   );

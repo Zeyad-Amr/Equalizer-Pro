@@ -1,7 +1,7 @@
 export const freqModeSliders = [
   {
     id: 0,
-    label: "0-100",
+    label: "-100 Hz",
     min: -50,
     max: 50,
     step: 1,
@@ -9,7 +9,7 @@ export const freqModeSliders = [
   },
   {
     id: 1,
-    label: "100-200",
+    label: "-200 Hz",
     min: -50,
     max: 50,
     step: 1,
@@ -17,7 +17,7 @@ export const freqModeSliders = [
   },
   {
     id: 2,
-    label: "200-300",
+    label: "-300 Hz",
     min: -50,
     max: 50,
     step: 1,
@@ -25,7 +25,7 @@ export const freqModeSliders = [
   },
   {
     id: 3,
-    label: "300-400",
+    label: "-400 Hz",
     min: -50,
     max: 50,
     step: 1,
@@ -33,7 +33,7 @@ export const freqModeSliders = [
   },
   {
     id: 4,
-    label: "400-500",
+    label: "-500 Hz",
     min: -50,
     max: 50,
     step: 1,
@@ -41,7 +41,7 @@ export const freqModeSliders = [
   },
   {
     id: 5,
-    label: "500-600",
+    label: "-600 Hz",
     min: -50,
     max: 50,
     step: 1,
@@ -49,7 +49,7 @@ export const freqModeSliders = [
   },
   {
     id: 6,
-    label: "600-700",
+    label: "-700 Hz",
     min: -50,
     max: 50,
     step: 1,
@@ -58,7 +58,7 @@ export const freqModeSliders = [
 
   {
     id: 7,
-    label: "700-800",
+    label: "-800 Hz",
     min: -50,
     max: 50,
     step: 1,
@@ -66,7 +66,7 @@ export const freqModeSliders = [
   },
   {
     id: 8,
-    label: "800-900",
+    label: "-900 Hz",
     min: -50,
     max: 50,
     step: 1,
@@ -74,7 +74,7 @@ export const freqModeSliders = [
   },
   {
     id: 9,
-    label: "900-1000",
+    label: "-1000 Hz",
     min: -50,
     max: 50,
     step: 1,
