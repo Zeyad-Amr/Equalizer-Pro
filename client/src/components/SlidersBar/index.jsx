@@ -20,21 +20,21 @@ const SlidersBar = () => {
     if (currentMode === 0) {
       const values = [];
       freqModeSliders.map((e) => {
-        e.value = 0;
+        e.value = 1;
         values.push(e);
       });
       setCurrentSlidersList(values);
     } else if (currentMode === 1) {
       const values = [];
       vowelsModeSliders.map((e) => {
-        e.value = 0;
+        e.value = 1;
         values.push(e);
       });
       setCurrentSlidersList([...vowelsModeSliders]);
     } else if (currentMode === 2) {
       const values = [];
       musicModeSliders.map((e) => {
-        e.value = 0;
+        e.value = 1;
         values.push(e);
       });
       setCurrentSlidersList([...musicModeSliders]);

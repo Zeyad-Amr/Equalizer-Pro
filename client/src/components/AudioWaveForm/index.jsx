@@ -23,9 +23,9 @@ const AudioWaveform = () => {
     inputFileUrl,
     processedFileUrl,
     setPlaying,
-    volume,
-    volume2,
+   muteOriginal,
     zoom,
+      volume,
     speed,
     wavesurferObj,
     setWavesurferObj,
@@ -52,11 +52,14 @@ const AudioWaveform = () => {
           progressColor: color_cyan,
           responsive: true,
           interact: false,
-          height: 250,
+          height: 220,
 
           plugins: [
             TimelinePlugin.create({
               container: "#wave-timeline",
+             primaryFontColor:color_white,
+            secondaryColor:color_white
+
             }),
           ],
         })
@@ -79,11 +82,12 @@ const AudioWaveform = () => {
           progressColor: color_cyan,
           responsive: true,
           interact: false,
-          height: 250,
+          height: 220,
 
           plugins: [
             TimelinePlugin.create({
               container: "#wave-timeline",
+                primaryFontColor:color_white
             }),
           ],
         })
@@ -135,21 +139,20 @@ const AudioWaveform = () => {
     }
   }, [wavesurferProcessedObj]);
 
-  // set volume of the wavesurfer object
-  // whenever volume variable in state is changed
-  useEffect(() => {
-    if (wavesurferObj) {
-      wavesurferObj.setVolume(volume);
-    }
-  }, [volume, wavesurferObj]);
 
-  // set volume of the wavesurfer object
+    // set volume of the wavesurfer object
   // whenever volume variable in state is changed
   useEffect(() => {
-    if (wavesurferProcessedObj) {
-      wavesurferProcessedObj.setVolume(volume2);
+    if (wavesurferObj&&wavesurferProcessedObj) {
+     if(muteOriginal==false){
+          wavesurferObj.setVolume(0);
+           wavesurferProcessedObj.setVolume(volume);
+     }else{
+        wavesurferObj.setVolume(volume);
+           wavesurferProcessedObj.setVolume(0);
+     }
     }
-  }, [volume2, wavesurferProcessedObj]);
+  }, [muteOriginal,volume, wavesurferObj,wavesurferProcessedObj]);
 
   // set zoom level of the wavesurfer object
   //whenever the zoom variable in state is changed
@@ -189,7 +192,7 @@ const AudioWaveform = () => {
     <section className="waveform-container">
       <div ref={wavesurferRef} id="waveform" />
       <div ref={timelineRef} id="wave-timeline" />
-      <ControlsBar />
+
     </section>
   );
 };

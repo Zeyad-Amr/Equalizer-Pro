@@ -25,11 +25,7 @@ const UploadAudio = () => {
   function get_values() {
     const values = [];
     currentSlidersList.map((e) => {
-      if (parseInt(e.value) <= 50 && parseInt(e.value) >= 1) {
-        values.push(0.98 * parseInt(e.value) + 1);
-      } else {
-        values.push(0.02 * parseInt(e.value) + 1);
-      }
+      values.push(e.value);
     });
     return values;
   }
@@ -67,8 +63,7 @@ const UploadAudio = () => {
     const response = await axios
       .post("/upload", formData)
       .then((res) => {
-        // console.log("Success");
-        // console.log(inputFile.name);
+
         setFile(inputFile);
         setProcessedFileUrl(res.data.file_url);
       })

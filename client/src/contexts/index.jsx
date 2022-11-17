@@ -14,8 +14,12 @@ export const FileContextProvider = ({ children }) => {
 
   // to control volume level of the audio. 0-mute, 1-max
   const [volume, setVolume] = useState(1);
+
   // to control volume level of the audio. 0-mute, 1-max
-  const [volume2, setVolume2] = useState(1);
+  const [muteOriginal, setMuteOriginal] = useState(true);
+
+  // to control volume level of the audio. 0-mute, 1-max
+  const [showSpectro, setShowSpectro] = useState(true);
 
   // to control the zoom level of the waveform
   const [zoom, setZoom] = useState(1000);
@@ -45,8 +49,7 @@ export const FileContextProvider = ({ children }) => {
         setPlaying,
         volume,
         setVolume,
-        volume2,
-        setVolume2,
+       muteOriginal, setMuteOriginal,showSpectro, setShowSpectro,
         zoom,
         setZoom,
         speed,

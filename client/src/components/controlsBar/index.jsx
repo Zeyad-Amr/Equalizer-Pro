@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { AppContext } from "../../contexts/index";
 import { Container, Row, Col } from "react-bootstrap";
 import BootstrapSwitchButton from "bootstrap-switch-button-react";
-
+import axios from '../../globals/API/axios'
 import "./style.css";
 
 function ControlsBar() {
@@ -11,14 +11,18 @@ function ControlsBar() {
     setPlaying,
     volume,
     setVolume,
-    volume2,
-    setVolume2,
+    setMuteOriginal,
+      setShowSpectro,showSpectro,currentSlidersList,        currentMode,
+
     zoom,
-    speed,
     setSpeed,
     setZoom,
     wavesurferObj,
     wavesurferProcessedObj,
+      processedFileUrl,
+        setProcessedFileUrl,
+        inputFile,
+        setInputFileUrl,
   } = useContext(AppContext);
 
   ////////////////////////////////// Start Handling Mehtods //////////////////////////////////
@@ -45,10 +49,6 @@ function ControlsBar() {
     setVolume(e.target.value);
   };
 
-  // set volume value to local state
-  const handleVolume2Slider = (e) => {
-    setVolume2(e.target.value);
-  };
 
   // set speed value to local state
   const handleSpeedSlider = (e) => {
@@ -60,12 +60,51 @@ function ControlsBar() {
     setZoom(e.target.value);
   };
 
+
+  const toggleMuteOriginal=(checked: boolean) => {
+              setMuteOriginal(!checked)
+
+    }
+
+ const toggleSpectroShow=(checked: boolean) => {
+    setShowSpectro(checked)
+}
+
+
+const handleButtonClick = async (e) => {
+
+    const formData = new FormData();
+    const values = get_values();
+
+    formData.append("values", values);
+
+    const response = await axios
+      .post(`/file/${inputFile}`, {mode:currentMode,values:values})
+      .then((res) => {
+          console.log(response)
+        setProcessedFileUrl(res.data.file_url);
+      })
+      .catch((e) => {
+        // console.log("Error", e);
+      });
+
+}
+
+ // normalizing the sliders values
+  function get_values() {
+    const values = [];
+    currentSlidersList.map((e) => {
+      values.push(e.value);
+    });
+    return values;
+  }
+
   ////////////////////////////////// End Handling Mehtods //////////////////////////////////
 
   return (
     <Container fluid className="p-12">
-      <Row>
-        <Col xs={1}>
+      <Row className={"align-items-center"} style={{paddingLeft:"20px", paddingRight:"20px"}}>
+        <Col >
           {" "}
           <button
             title="play/pause"
@@ -84,9 +123,9 @@ function ControlsBar() {
             <i className="material-symbols-rounded">stop_circle</i>
           </button>
         </Col>
-        <Col xs={1}></Col>
 
-        <Row xs={4}>
+
+        <Row xs={3}>
           <Col>
             <i className="material-symbols-rounded  zoom-icon">remove_circle</i>
           </Col>
@@ -94,7 +133,7 @@ function ControlsBar() {
             <input
               type="range"
               min="1"
-              max="1000"
+              max="4000"
               value={zoom}
               step="10"
               onChange={handleZoomSlider}
@@ -106,8 +145,8 @@ function ControlsBar() {
           </Col>
         </Row>
 
-        <Col xs={0.5}></Col>
-        <Row>
+ <Col xs={1}></Col>
+        <Row className={"align-items-center"}>
           <Col>
             {volume > 0 ? (
               <i className="material-symbols-rounded">volume_up</i>
@@ -126,33 +165,51 @@ function ControlsBar() {
               className="slider volume-slider"
             />
           </Col>
+          <Col>
+          <BootstrapSwitchButton
+            onstyle="outline-primary"
+            offstyle="outline-secondary"
+            offlabel="Original"
+            onlabel="Modified"
+            width="100"
+            onChange={toggleMuteOriginal}
+          />
+        </Col>
         </Row>
 
-        <Col></Col>
+        <Col xs={1}></Col>
         <Row>
           <Col>
             <select name="speed" id="speed" onChange={handleSpeedSlider}>
-              <option value="x0.25">x0.25</option>
-              <option value="x0.5">x0.5</option>
-              <option value="x0.75">x0.75</option>
-              <option value="x1" selected={true}>
+              <option value="0.25">x0.25</option>
+              <option value="0.5">x0.5</option>
+              <option value="0.75">x0.75</option>
+              <option value="1" selected={true}>
                 x1
               </option>
-              <option value="x1.25">x1.25</option>
-              <option value="x1.5">x1.5</option>
-              <option value="x1.75">x1.75</option>
-              <option value="x2">x2</option>
+              <option value="1.25">x1.25</option>
+              <option value="1.5">x1.5</option>
+              <option value="1.75">x1.75</option>
+              <option value="2">x2</option>
             </select>
           </Col>
         </Row>
-        <Col>
+         <Col xs={1}></Col>
+
+      <button className="upload-btn upload" onClick={handleButtonClick}>
+        Process
+      </button>
+        <Col xs={1}></Col>
+
+         <Col>
           <BootstrapSwitchButton
-            checked={true}
             onstyle="outline-primary"
             offstyle="outline-secondary"
-            onlabel="Orignal"
-            offlabel="Modified"
-            width="100"
+            offlabel="Hide Spectrogram"
+            onlabel="Show Spectrogram"
+            width="200"
+            checked={showSpectro}
+            onChange={toggleSpectroShow}
           />
         </Col>
       </Row>

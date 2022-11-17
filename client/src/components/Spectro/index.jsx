@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { AppContext } from "../../contexts/index";
 import { Row, Col } from "react-bootstrap";
+
 function Spectrogram() {
   const { inputFile } = useContext(AppContext);
   const getImage = (props) => {
@@ -9,16 +10,16 @@ function Spectrogram() {
         return (
           <img
             src={`http://localhost:5000/api/spectrogram/${inputFile}`}
-            alt="specto"
-            height="250px"
+            alt="Original Audio Spectrogram"
+            height="220px"
           />
         );
       } else {
         return (
           <img
             src={`http://localhost:5000/api/spectrogram/mod`}
-            alt="specto"
-            height="250px"
+            alt="Modified Audio Spectrogram"
+            height="220px"
           />
         );
       }
