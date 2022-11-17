@@ -9,11 +9,11 @@ function ControlsBar() {
     volume,
     setVolume,
     zoom,
+    speed,
+    setSpeed,
     setZoom,
     wavesurferObj,
-    setWavesurferObj,
     wavesurferProcessedObj,
-    setWavesurferProcessedObj,
   } = useContext(AppContext);
 
   ////////////////////////////////// Start Handling Mehtods //////////////////////////////////
@@ -40,6 +40,11 @@ function ControlsBar() {
     setVolume(e.target.value);
   };
 
+  // set speed value to local state
+  const handleSpeedSlider = (e) => {
+    setSpeed(e.target.value);
+  };
+
   // set zoom value to local state
   const handleZoomSlider = (e) => {
     setZoom(e.target.value);
@@ -48,7 +53,7 @@ function ControlsBar() {
   ////////////////////////////////// End Handling Mehtods //////////////////////////////////
 
   return (
-    <Container>
+    <Container fluid className="p-2">
       <Row>
         <Col>
           {" "}
@@ -69,42 +74,65 @@ function ControlsBar() {
             <i className="material-symbols-rounded">stop_circle</i>
           </button>
         </Col>
-        <Col>
-          <i className="material-symbols-rounded  zoom-icon">remove_circle</i>
-        </Col>
-        <Col>
-          <input
-            type="range"
-            min="1"
-            max="1000"
-            value={zoom}
-            step="10"
-            onChange={handleZoomSlider}
-            class="slider zoom-slider"
-          />
-        </Col>
-        <Col>
-          <i className="material-symbols-rounded  zoom-icon">add_circle</i>
-        </Col>
-        <Col>
-          {volume > 0 ? (
-            <i className="material-symbols-rounded">volume_up</i>
-          ) : (
-            <i className="material-symbols-rounded">volume_off</i>
-          )}
-        </Col>
-        <Col>
+        <Col></Col>
+        <Row>
           {" "}
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.05"
-            value={volume}
-            onChange={handleVolumeSlider}
-            className="slider volume-slider"
-          />
-        </Col>
+          <Col>
+            <i className="material-symbols-rounded  zoom-icon">remove_circle</i>
+          </Col>
+          <Col>
+            <input
+              type="range"
+              min="1"
+              max="1000"
+              value={zoom}
+              step="10"
+              onChange={handleZoomSlider}
+              class="slider zoom-slider"
+            />
+          </Col>
+          <Col>
+            <i className="material-symbols-rounded  zoom-icon">add_circle</i>
+          </Col>
+        </Row>
+        <Col></Col>
+        <Row>
+          <Col>
+            {volume > 0 ? (
+              <i className="material-symbols-rounded">volume_up</i>
+            ) : (
+              <i className="material-symbols-rounded">volume_off</i>
+            )}
+          </Col>
+          <Col>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              value={volume}
+              onChange={handleVolumeSlider}
+              className="slider volume-slider"
+            />
+          </Col>
+        </Row>
+        <Col></Col>
+        <Row>
+          <Col>
+            <p>x{speed}</p>
+          </Col>
+          <Col>
+            <input
+              type="range"
+              min="1"
+              max="10"
+              value={speed}
+              step="0.05"
+              onChange={handleSpeedSlider}
+              class="slider zoom-slider"
+            />
+          </Col>
+        </Row>
       </Row>
     </Container>
   );

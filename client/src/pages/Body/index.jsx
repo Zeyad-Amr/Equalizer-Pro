@@ -16,6 +16,8 @@ const Body = () => {
           <ModesTabs />
         </Col>
       </Row>
+      <br />
+      <br />
       <Row>
         <Spectro />
       </Row>

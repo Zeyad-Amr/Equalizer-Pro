@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { AppContext } from "../../contexts/index";
-
+import { Row, Col } from "react-bootstrap";
 function Spectrogram() {
   const { inputFile } = useContext(AppContext);
   const getImage = () => {
@@ -12,11 +12,18 @@ function Spectrogram() {
           width={"600px"}
         />
       );
-    } else {
-      return <p>Null</p>;
     }
   };
-  return <div>{getImage()}</div>;
+  return (
+    <Row>
+      <Col>
+        <div>{getImage()}</div>
+      </Col>
+      <Col>
+        <div>{getImage()}</div>
+      </Col>
+    </Row>
+  );
 }
 
 export default Spectrogram;

@@ -22,12 +22,10 @@ const AudioWaveform = () => {
   const {
     inputFileUrl,
     processedFileUrl,
-    playing,
     setPlaying,
     volume,
-    setVolume,
     zoom,
-    setZoom,
+    speed,
     wavesurferObj,
     setWavesurferObj,
     wavesurferProcessedObj,
@@ -167,6 +165,22 @@ const AudioWaveform = () => {
       wavesurferProcessedObj.zoom(zoom);
     }
   }, [zoom, wavesurferProcessedObj]);
+
+  // set speed level of the wavesurfer object
+  //whenever the zoom variable in state is changed
+  useEffect(() => {
+    if (wavesurferObj) {
+      wavesurferObj.setPlaybackRate(speed);
+    }
+  }, [speed, wavesurferObj]);
+
+  // set zoom level of the wavesurfer object
+  //whenever the zoom variable in state is changed
+  useEffect(() => {
+    if (wavesurferProcessedObj) {
+      wavesurferProcessedObj.setPlaybackRate(speed);
+    }
+  }, [speed, wavesurferProcessedObj]);
 
   ////////////////////////////////// End State Methods //////////////////////////////////
 

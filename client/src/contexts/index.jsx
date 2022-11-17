@@ -17,6 +17,9 @@ export const FileContextProvider = ({ children }) => {
 
   // to control the zoom level of the waveform
   const [zoom, setZoom] = useState(1);
+
+  // to control the speed level of the waveform
+  const [speed, setSpeed] = useState(1);
   // create an instance of the wavesurfer
   const [wavesurferObj, setWavesurferObj] = useState();
 
@@ -42,6 +45,8 @@ export const FileContextProvider = ({ children }) => {
         setVolume,
         zoom,
         setZoom,
+        speed,
+        setSpeed,
         wavesurferObj,
         setWavesurferObj,
         wavesurferProcessedObj,
