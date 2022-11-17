@@ -6,7 +6,7 @@ function Spectrogram() {
   const { inputFile } = useContext(AppContext);
   const getImage = (props) => {
     if (inputFile !== "") {
-      if (props.mod !== true) {
+      if (props.mod != true) {
         return (
           <img
             src={`http://localhost:5000/api/spectrogram/${inputFile}`}
@@ -27,9 +27,9 @@ function Spectrogram() {
   };
   return (
     <Col>
-      <div>{getImage({ mod: "false" })}</div>
+      <div>{getImage({ mod: false })}</div>
 
-      <div>{getImage({ mod: "true" })}</div>
+      <div>{getImage({ mod: true })}</div>
     </Col>
   );
 }

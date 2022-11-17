@@ -82,8 +82,17 @@ const handleButtonClick = async (e) => {
       .post(`/file/${inputFile}`, {mode:currentMode,values:values})
       .then((res) => {
           console.log(res)
-        setProcessedFileUrl("http://localhost:5000/api/file/modified");
+     setProcessedFileUrl("");
+        setProcessedFileUrl(res.data.file_url);
       })
+
+    await axios
+      .get('/spectrogram/mod')
+      .then((res) => {
+          console.log(res)
+
+      })
+
       .catch((e) => {
         // console.log("Error", e);
       });

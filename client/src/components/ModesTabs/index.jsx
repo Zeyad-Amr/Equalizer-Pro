@@ -44,7 +44,7 @@ const ModesTabs = () => {
                 <Nav.Link eventKey="music">Music</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="voice">Voice Changer</Nav.Link>
+                <Nav.Link eventKey="voice">Animals</Nav.Link>
               </Nav.Item>
             </Nav>
             <Tab.Content

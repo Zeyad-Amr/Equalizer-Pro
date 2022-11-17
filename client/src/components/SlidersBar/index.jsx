@@ -4,9 +4,9 @@ import {
   musicModeSliders,
   freqModeSliders,
   vowelsModeSliders,
-  voiceChangerSliders,
+  animals,
 } from "../../globals/constants/modesSlider";
-import RangeSlider from "../Rangeslider/index";
+import RangeSlider from "../RangeSlider/index";
 import { AppContext } from "../../contexts/index";
 const SlidersBar = () => {
   // init context value
@@ -40,11 +40,11 @@ const SlidersBar = () => {
       setCurrentSlidersList([...musicModeSliders]);
     } else if (currentMode === 3) {
       const values = [];
-      musicModeSliders.map((e) => {
-        e.value = 0;
+      animals.map((e) => {
+        e.value = 1;
         values.push(e);
       });
-      setCurrentSlidersList([...voiceChangerSliders]);
+      setCurrentSlidersList([...animals]);
     }
   }, [currentMode]);
 

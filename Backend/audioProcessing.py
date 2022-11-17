@@ -44,9 +44,7 @@ def edit_amps(fourier, frequency, ranges, factor, triang=False):
 
 # Frequency mode
 def change_freqs(n, f_signal, factors):  # inverse fft
-    signalChunks = np.array_split(np.abs(f_signal), n)
-    print(type(signalChunks[0]))
-    print(type(factors[0]))
+    signalChunks = np.array_split(f_signal, n)
     for i in range(0, n):
         signalChunks[i] = signalChunks[i] * factors[i]
     fullSignal = np.concatenate(signalChunks)
@@ -114,6 +112,13 @@ def modify_file(file, mode, values=[]):
 
     modifiedSignal = fourierInverse(i_signal)
     save(modifiedSignal, sr)
+
+def Animal(frequency, fourier, values=[]):
+    BirdRanges = [[3000,70000]]
+    edit_amps(fourier, frequency, BirdRanges, values[0])
+
+    DogRanges =[100,3000]
+    edit_amps(fourier, frequency, DogRanges, values[0])
 
 
 def spectrogram(signal, name=''):

@@ -18,6 +18,7 @@ const UploadAudio = () => {
     // console.log("new file" + file);
     if (file) {
       setInputFileUrl(URL.createObjectURL(file));
+      setProcessedFileUrl(URL.createObjectURL(file));
     }
   }, [file]);
 
@@ -65,7 +66,7 @@ const UploadAudio = () => {
       .then((res) => {
 
         setFile(inputFile);
-        setProcessedFileUrl(res.data.file_url);
+        // setProcessedFileUrl(res.data.file_url);
       })
       .catch((e) => {
         // console.log("Error", e);

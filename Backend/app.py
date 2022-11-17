@@ -65,7 +65,7 @@ def file(file_name):
         print(type(values[0]))
         print(values[0])
         audioProcessing.modify_file(signalPath, mode, map_values(values))
-        return {"message": "Values updated"}, 200
+        return {"file_url": "http://127.0.0.1:5000/api/file/" + file_name}, 200
 
 
 # Spectrograms images APIs

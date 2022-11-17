@@ -106,10 +106,13 @@ const AudioWaveform = () => {
   // once the Processed file URL is ready
   // load the input Processed to produce the waveform
   useEffect(() => {
+       if (inputFileUrl && wavesurferObj) {
+      wavesurferObj.load(inputFileUrl);
+    }
     if (processedFileUrl && wavesurferProcessedObj) {
       wavesurferProcessedObj.load(processedFileUrl);
     }
-  }, [inputFileUrl, wavesurferProcessedObj]);
+  }, [processedFileUrl, wavesurferProcessedObj]);
 
   useEffect(() => {
     if (wavesurferObj) {
