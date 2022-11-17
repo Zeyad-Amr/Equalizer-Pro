@@ -81,8 +81,8 @@ const handleButtonClick = async (e) => {
     const response = await axios
       .post(`/file/${inputFile}`, {mode:currentMode,values:values})
       .then((res) => {
-          console.log(response)
-        setProcessedFileUrl(res.data.file_url);
+          console.log(res)
+        setProcessedFileUrl("http://localhost:5000/api/file/modified");
       })
       .catch((e) => {
         // console.log("Error", e);

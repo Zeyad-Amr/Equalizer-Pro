@@ -25,10 +25,10 @@ def allowed_file(filename):
 # Convert values of frequencies as string to array of floats
 def map_values(valuesStr):
     valueArr = []
-    if valuesStr:
-        valuesStrArray = valuesStr.split(",")
-        for value in valuesStrArray:
-            valueArr.append(float(value))
+
+    for value in valuesStr:
+        print(value)
+        valueArr.append(float(value))
     return valueArr
 
 
@@ -40,14 +40,12 @@ def upload_file():
 
     # print(request.form)
     file = request.files["file"]
-    valuesStr = request.form["values"]
-    values = map_values(valuesStr)
+
     if not allowed_file(file.filename):
         return {"err": "File format is not accepted"}, 400
 
     signalPath = os.path.join(AUDIO_FOLDER, file.filename)
     file.save(signalPath)
-    audioProcessing.modify_file(signalPath, 1, values=values)
     return {"file_url": "http://127.0.0.1:5000/api/file/" + file.filename}, 200
 
 
@@ -64,8 +62,9 @@ def file(file_name):
         body = request.get_json()
         mode = body["mode"]
         values = body["values"]
-        print(type(values))
-        audioProcessing.modify_file(signalPath, mode, values)
+        print(type(values[0]))
+        print(values[0])
+        audioProcessing.modify_file(signalPath, mode, map_values(values))
         return {"message": "Values updated"}, 200
 
 

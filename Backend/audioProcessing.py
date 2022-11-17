@@ -44,7 +44,9 @@ def edit_amps(fourier, frequency, ranges, factor, triang=False):
 
 # Frequency mode
 def change_freqs(n, f_signal, factors):  # inverse fft
-    signalChunks = np.array_split(f_signal, n)
+    signalChunks = np.array_split(np.abs(f_signal), n)
+    print(type(signalChunks[0]))
+    print(type(factors[0]))
     for i in range(0, n):
         signalChunks[i] = signalChunks[i] * factors[i]
     fullSignal = np.concatenate(signalChunks)
@@ -101,13 +103,13 @@ def modify_file(file, mode, values=[]):
     signal, sr = load_signal(file)
     f_signal, freq = fourier(signal, sr)
 
-    if(mode == 1):
+    if(mode == 0):
         i_signal = change_freqs(len(values), f_signal, values)
-    elif(mode == 2):
+    elif(mode == 1):
         i_signal = remove_vowels(f_signal, freq, values[0])
-    elif(mode == 3):
+    elif(mode == 2):
         i_signal, _ = change_musical_instruments(freq, f_signal, values)
-    elif(mode == 4):
+    elif(mode == 3):
         i_signal = change_voice(f_signal, sr, values[0])
 
     modifiedSignal = fourierInverse(i_signal)
