@@ -2,7 +2,7 @@ from flask import Flask, request, send_from_directory
 from flask_cors import CORS
 import os.path
 
-import audiotest
+import audioProcessing
 
 AUDIO_FOLDER = '.\\files\samples'
 IMG_FOLDER = '.\\files\images'
@@ -47,7 +47,7 @@ def upload_file():
 
     signalPath = os.path.join(AUDIO_FOLDER, file.filename)
     file.save(signalPath)
-    audiotest.modify_file(signalPath, 1, values=values)
+    audioProcessing.modify_file(signalPath, 1, values=values)
     return {"file_url": "http://127.0.0.1:5000/api/file/" + file.filename}, 200
 
 
@@ -57,19 +57,20 @@ def file(file_name):
     signalPath = os.path.join(AUDIO_FOLDER, file_name)
     # get the audio file
     if request.method == 'GET':
-        # audiotest.modify_file(signalPath, 1, values=values)
+        # audioProcessing.modify_file(signalPath, 1, values=values)
         return send_from_directory(directory=app.config['AUDIO_FOLDER'], path="modified.wav")
     # modify the audio file
     if request.method == 'POST':
         body = request.get_json()
         mode = body["mode"]
         values = body["values"]
-        audiotest.modify_file(signalPath, mode, values)
+        print(type(values))
+        audioProcessing.modify_file(signalPath, mode, values)
         return {"message": "Values updated"}, 200
 
 
 # Spectrograms images APIs
-@app.route('/api/spectrogram/<img>', methods=['GET'])
+@ app.route('/api/spectrogram/<img>', methods=['GET'])
 def spectrogram(img):
     signalPath = os.path.join(AUDIO_FOLDER, img)
     modifiedSignalPath = os.path.join(AUDIO_FOLDER, 'modified.wav')
@@ -77,10 +78,10 @@ def spectrogram(img):
     if request.method == 'GET':
         print(img)
         if(img == 'mod'):
-            audiotest.spectrogram(modifiedSignalPath, 'modified')
+            audioProcessing.spectrogram(modifiedSignalPath, 'modified')
             return send_from_directory(directory=app.config['IMG_FOLDER'], path='spectro_modified.png')
         else:
-            audiotest.spectrogram(signalPath, img)
+            audioProcessing.spectrogram(signalPath, img)
             return send_from_directory(directory=app.config['IMG_FOLDER'], path='spectro_' + img + '.png')
 
 

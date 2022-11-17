@@ -29,10 +29,17 @@ def save(signal, sr):
     write("./files/samples/modified.wav", np.int0(sr), inverseFloat)
 
 
-def dropFrequency(frequencies, magnitude, maxFreq, minFreq):
-    index = (frequencies > minFreq) & (frequencies < maxFreq)
-    magnitude[index] = magnitude[index]*0
-    return magnitude
+def edit_amps(fourier, frequency, ranges, factor, triang=False):
+    for range in ranges:
+        if len(range) == 1:
+            index = (frequency > range[0])
+        else:
+            index = (frequency > range[0]) & (frequency < range[1])
+        if triang:
+            fourier[index] = fourier[index] * factor * \
+                scipy.signal.triang(len(fourier[index]))
+        else:
+            fourier[index] = fourier[index] * factor
 
 
 # Frequency mode
@@ -55,43 +62,30 @@ def remove_vowels(f_signal, freq, vowel):
             'o': 1850,  # cut below 1850hz #works for o Sock
         }
         return switcher.get(argument, -1)
-    print(type(f_signal))
-    print(type(freq))
     f_signal[(np.abs(freq) < chose_vowel(vowel))] = 0
-    print(len(f_signal[(np.abs(freq) < chose_vowel(vowel))]))
     return f_signal
 
 
 # musical instruments mode
 def change_musical_instruments(frequency, fourier, values=[]):
-    def edit_amps(ranges, factor, triang=False):
-        for range in ranges:
-            if len(range) == 1:
-                index = (frequency > range[0])
-            else:
-                index = (frequency > range[0]) & (frequency < range[1])
-            if triang:
-                fourier[index] = fourier[index] * factor * \
-                    scipy.signal.triang(len(fourier[index]))
-            else:
-                fourier[index] = fourier[index] * factor
 
     # Drum ranges
     drumRanges = [[10, 500], [500, 200]]
-    edit_amps(drumRanges, values[0], triang=True)
+    edit_amps(fourier, frequency, drumRanges, values[0], triang=True)
 
     # Trumpet ranges
     trumpetRanges = [[0.5, 100], [730, 750], [1465, 1550], [2200, 2225], [
         2920, 3000], [3695, 3705], [4410, 4470], [7390, 7410]]
-    edit_amps(trumpetRanges, values[1])
-    edit_amps([[6500]], values[1], triang=True)
+    edit_amps(fourier, frequency, trumpetRanges, values[1])
+    edit_amps(fourier, frequency, [[6500]], values[1], triang=True)
 
     # Xylophone ranges
     XylophoneRanges = [[0.5, 40], [700, 1100], [850, 950],
-                       [3300, 3350], [4430, 4480], [4000, 6000], [6000]]
-    edit_amps(XylophoneRanges, values[2])
-    XylophoneTriangRanges = [[3690, 3690], [3710, 4000]]
-    edit_amps(XylophoneTriangRanges, values[2], triang=True)
+                       [3300, 3350], [4000, 6000], [6000]]
+    edit_amps(fourier, frequency, XylophoneRanges, values[2])
+    XylophoneTriangRanges = [[3710, 4000]]
+    edit_amps(fourier, frequency, XylophoneTriangRanges,
+              values[2], triang=True)
 
     return fourier, frequency
 
@@ -127,9 +121,10 @@ def spectrogram(signal, name=''):
     # Plot the transformed audio data
     fig, ax = plt.subplots(figsize=(10, 5))
     img = librosa.display.specshow(signal_db,
+                                   sr=sr,
                                    x_axis='time',
                                    y_axis='log',
                                    ax=ax)
     ax.set_title(name)
-    fig.colorbar(img, ax=ax, format=f'%0.2f')
+    # fig.colorbar(img, ax=ax, format=f'%0.2f')
     plt.savefig('./files/images/spectro_' + name+'.png')
