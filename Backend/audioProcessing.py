@@ -96,6 +96,14 @@ def change_voice(signal, sr, value):  # voice change function
     changedVoice = librosa.effects.pitch_shift(signal, sr, n_steps=value)
     return changedVoice
 
+def Animal(frequency, fourier, values=[]):
+    BirdRanges = [[3000,70000]]
+    edit_amps(fourier, frequency, BirdRanges, values[0])
+
+    DogRanges =[[100,3000]]
+    edit_amps(fourier, frequency, DogRanges, values[1])
+    return fourier, frequency
+
 
 def modify_file(file, mode, values=[]):
     signal, sr = load_signal(file)
@@ -108,18 +116,10 @@ def modify_file(file, mode, values=[]):
     elif(mode == 2):
         i_signal, _ = change_musical_instruments(freq, f_signal, values)
     elif(mode == 3):
-        i_signal = change_voice(f_signal, sr, values[0])
+        i_signal = Animal(freq, f_signal, values)
 
     modifiedSignal = fourierInverse(i_signal)
     save(modifiedSignal, sr)
-
-def Animal(frequency, fourier, values=[]):
-    BirdRanges = [[3000,70000]]
-    edit_amps(fourier, frequency, BirdRanges, values[0])
-
-    DogRanges =[100,3000]
-    edit_amps(fourier, frequency, DogRanges, values[0])
-
 
 def spectrogram(signal, name=''):
     signal, sr = load_signal(signal)
