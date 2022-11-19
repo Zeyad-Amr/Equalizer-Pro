@@ -62,7 +62,7 @@ def modify_file(file, mode, values=[]):
     elif(mode == 2):
         i_signal, _ = change_musical_instruments(freq, f_signal, values)
     elif(mode == 3):
-        i_signal = Animal(freq, f_signal, values)
+        i_signal, _ = Animal(freq, f_signal, values)
 
     modifiedSignal = fourierInverse(i_signal)
     save(modifiedSignal, sr)
