@@ -30,29 +30,6 @@ def save(signal, sr):
     # to export the new audio as wav file
     write("./files/samples/modified.wav", np.int0(sr), inverseFloat)
 
-
-def edit_amps(fourier, frequency, ranges, factor, triang=False):
-    for range in ranges:
-        if len(range) == 1:
-            index = (frequency > range[0])
-        else:
-            index = (frequency > range[0]) & (frequency < range[1])
-        if triang:
-            fourier[index] = fourier[index] * factor * \
-                scipy.signal.triang(len(fourier[index]))
-        else:
-            fourier[index] = fourier[index] * factor
-
-
-# Frequency mode
-def change_freqs(n, f_signal, factors):  # inverse fft
-    signalChunks = np.array_split(f_signal, n)
-    for i in range(0, n):
-        signalChunks[i] = signalChunks[i] * factors[i]
-    fullSignal = np.concatenate(signalChunks)
-    return fullSignal
-
-
 def modify_file(file, mode, values=[]):
     signal, sr = load_signal(file)
     f_signal, freq = fourier(signal, sr)
@@ -69,6 +46,27 @@ def modify_file(file, mode, values=[]):
     modifiedSignal = fourierInverse(i_signal)
     save(modifiedSignal, sr)
 
+def edit_amps(fourier, frequency, ranges, factor, triang=False):
+    for range in ranges:
+        if len(range) == 1:
+            index = (frequency > range[0])
+        else:
+            index = (frequency > range[0]) & (frequency < range[1])
+            
+        if triang:
+            fourier[index] = fourier[index] * factor * \
+                scipy.signal.triang(len(fourier[index]))
+        else:
+            fourier[index] = fourier[index] * factor
+
+
+# Frequency mode
+def change_freqs(n, f_signal, factors):  # inverse fft
+    signalChunks = np.array_split(f_signal, n)
+    for i in range(0, n):
+        signalChunks[i] = signalChunks[i] * factors[i]
+    fullSignal = np.concatenate(signalChunks)
+    return fullSignal
 
 # vowels mode
 def remove_vowels(f_signal, freq, vowel):

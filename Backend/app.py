@@ -48,6 +48,7 @@ def upload_file():
     file.save(signalPath)
     img = file.filename.split('.')[0]
     audioProcessing.spectrogram(signalPath, img)
+    audioProcessing.spectrogram(signalPath, 'modified')
     return {"file_url": "http://127.0.0.1:5000/api/file/" + file.filename}, 200
 
 
@@ -79,11 +80,11 @@ def spectrogram(img):
 
     if request.method == 'GET':
         print(img)
-        if(img == 'mod'):
-
-            return send_from_directory(directory=app.config['IMG_FOLDER'], path='spectro_modified.png')
+        x = send_from_directory(
+            directory=app.config['IMG_FOLDER'], path='spectro_modified.png')
+        if(img == 'mod' and x):
+            return x
         else:
-
             return send_from_directory(directory=app.config['IMG_FOLDER'], path='spectro_' + img + '.png')
 
 

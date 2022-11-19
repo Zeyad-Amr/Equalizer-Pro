@@ -82,9 +82,15 @@ function ControlsBar() {
   const toggleSpectroShow = async (checked) => {
     setModifiedSpectrogram("");
     setShowSpectro(checked);
-    setOriginalSpectrogram(
-      `http://localhost:5000/api/spectrogram/${inputFile}`
-    );
+    await axios
+      .get(`/spectrogram/${inputFile.split(".")[0]}`)
+      .then((res) => {
+        setOriginalSpectrogram(
+          `http://localhost:5000/api/spectrogram/${inputFile.split(".")[0]}`
+        );
+      })
+      .catch((e) => {});
+
     await axios
       .get("/spectrogram/mod")
       .then((res) => {
@@ -110,6 +116,23 @@ function ControlsBar() {
         setProcessedFileUrl(res.data.file_url);
       })
       .then((res) => {});
+
+    setModifiedSpectrogram("");
+    await axios
+      .get(`/spectrogram/${inputFile.split(".")[0]}`)
+      .then((res) => {
+        setOriginalSpectrogram(
+          `http://localhost:5000/api/spectrogram/${inputFile.split(".")[0]}`
+        );
+      })
+      .catch((e) => {});
+
+    await axios
+      .get("/spectrogram/mod")
+      .then((res) => {
+        setModifiedSpectrogram(`http://localhost:5000/api/spectrogram/mod`);
+      })
+      .catch((e) => {});
   };
 
   // normalizing the sliders values
