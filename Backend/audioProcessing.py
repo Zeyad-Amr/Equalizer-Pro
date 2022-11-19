@@ -1,9 +1,11 @@
+import scipy
+import matplotlib.pyplot as plt
 import numpy as np
 import librosa
 import librosa.display
 from scipy.io.wavfile import write
-import matplotlib.pyplot as plt
-import scipy
+import matplotlib
+matplotlib.use('Agg')
 
 
 def load_signal(path):
