@@ -46,18 +46,30 @@ def modify_file(file, mode, values=[]):
     modifiedSignal = fourierInverse(i_signal)
     save(modifiedSignal, sr)
 
-def edit_amps(fourier, frequency, ranges, factor, triang=False):
-    for range in ranges:
-        if len(range) == 1:
-            index = (frequency > range[0])
-        else:
-            index = (frequency > range[0]) & (frequency < range[1])
-            
-        if triang:
-            fourier[index] = fourier[index] * factor * \
-                scipy.signal.triang(len(fourier[index]))
-        else:
-            fourier[index] = fourier[index] * factor
+def edit_amps(fourier, frequency, sliders=[]):
+        for slider in sliders:
+            for range in slider["Ranges"]:
+                if len(range) == 1:
+                    index = (frequency > range[0])
+                else:
+                    index = (frequency > range[0]) & (frequency < range[1])
+                if slider["triang"] == 1:
+                    fourier[index] = fourier[index] * slider["factor"] * \
+                                     scipy.signal.triang(len(fourier[index]))
+                else:
+                    fourier[index] = fourier[index] * slider["factor"]
+        return fourier
+    # for range in ranges:
+    #     if len(range) == 1:
+    #         index = (frequency > range[0])
+    #     else:
+    #         index = (frequency > range[0]) & (frequency < range[1])
+    #
+    #     if triang:
+    #         fourier[index] = fourier[index] * factor * \
+    #             scipy.signal.triang(len(fourier[index]))
+    #     else:
+    #         fourier[index] = fourier[index] * factor
 
 
 # Frequency mode
