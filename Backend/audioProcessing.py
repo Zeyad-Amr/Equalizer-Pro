@@ -44,27 +44,37 @@ def edit_amps(fourier, frequency, ranges, factor, triang=False):
 
 # Frequency mode
 def change_freqs(n, f_signal, factors):  # inverse fft
-    signalChunks = np.array_split(np.abs(f_signal), n)
-    print(type(signalChunks[0]))
-    print(type(factors[0]))
+    signalChunks = np.array_split(f_signal, n)
     for i in range(0, n):
         signalChunks[i] = signalChunks[i] * factors[i]
     fullSignal = np.concatenate(signalChunks)
     return fullSignal
 
 
+def modify_file(file, mode, values=[]):
+    signal, sr = load_signal(file)
+    f_signal, freq = fourier(signal, sr)
+
+    if(mode == 0):
+        i_signal = change_freqs(len(values), f_signal, values)
+    elif(mode == 1):
+        i_signal = remove_vowels(f_signal, freq, values)
+    elif(mode == 2):
+        i_signal, _ = change_musical_instruments(freq, f_signal, values)
+    elif(mode == 3):
+        i_signal = Animal(freq, f_signal, values)
+
+    modifiedSignal = fourierInverse(i_signal)
+    save(modifiedSignal, sr)
+
+
 # vowels mode
 def remove_vowels(f_signal, freq, vowel):
-    def chose_vowel(argument):
-        print(argument)
-        switcher = {
-            'a': 2400,  # Cut below 2400hz #works for ae Back,
-            'u': 2000,  # cut signal below 2000Hz #works for u COOK
-            'i': 5000,  # cut signal below  5000Hz #works for i HIT
-            'o': 1850,  # cut below 1850hz #works for o Sock
-        }
-        return switcher.get(argument, -1)
-    f_signal[(np.abs(freq) < chose_vowel(vowel))] = 0
+    ranges = [2400, 2000, 5000, 1850]
+
+    for i in range(0, len(vowel)):
+        f_signal[(np.abs(freq) < ranges[i])] *= vowel[i]
+
     return f_signal
 
 
@@ -92,28 +102,13 @@ def change_musical_instruments(frequency, fourier, values=[]):
     return fourier, frequency
 
 
-# change voice mode
-def change_voice(signal, sr, value):  # voice change function
-    # n_steps is the value to be taken from slider
-    changedVoice = librosa.effects.pitch_shift(signal, sr, n_steps=value)
-    return changedVoice
+def Animal(frequency, fourier, values=[]):
+    BirdRanges = [[3000, 70000]]
+    edit_amps(fourier, frequency, BirdRanges, values[0])
 
-
-def modify_file(file, mode, values=[]):
-    signal, sr = load_signal(file)
-    f_signal, freq = fourier(signal, sr)
-
-    if(mode == 0):
-        i_signal = change_freqs(len(values), f_signal, values)
-    elif(mode == 1):
-        i_signal = remove_vowels(f_signal, freq, values[0])
-    elif(mode == 2):
-        i_signal, _ = change_musical_instruments(freq, f_signal, values)
-    elif(mode == 3):
-        i_signal = change_voice(f_signal, sr, values[0])
-
-    modifiedSignal = fourierInverse(i_signal)
-    save(modifiedSignal, sr)
+    DogRanges = [[100, 3000]]
+    edit_amps(fourier, frequency, DogRanges, values[1])
+    return fourier, frequency
 
 
 def spectrogram(signal, name=''):

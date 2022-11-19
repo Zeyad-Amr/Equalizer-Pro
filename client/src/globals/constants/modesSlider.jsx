@@ -147,13 +147,21 @@ export const musicModeSliders = [
 
 ];
 
-export const voiceChangerSliders = [
+export const animals = [
   {
     id: 0,
-    label: "Voice",
-    min: 1,
-    max: 4,
+    label: "Bird",
+    min: 0,
+    max: 1,
     step: 1,
-    value: 0,
+    value: 1,
+  },
+    {
+    id: 0,
+    label: "Dog",
+    min: 0,
+    max: 1,
+    step: 1,
+    value: 1,
   },
 ];

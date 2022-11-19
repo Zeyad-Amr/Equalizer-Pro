@@ -1,15 +1,9 @@
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
-
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Col } from "react-bootstrap";
 import SlidersBar from "../SlidersBar";
 import React, { useContext } from "react";
 import { AppContext } from "../../contexts";
-import {
-  musicModeSliders,
-  freqModeSliders,
-  vowelsModeSliders,
-} from "../../globals/constants/modesSlider";
 const ModesTabs = () => {
   // init context value
   const { setcurrentMode } = useContext(AppContext);
@@ -44,7 +38,7 @@ const ModesTabs = () => {
                 <Nav.Link eventKey="music">Music</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="voice">Voice Changer</Nav.Link>
+                <Nav.Link eventKey="voice">Animals</Nav.Link>
               </Nav.Item>
             </Nav>
             <Tab.Content

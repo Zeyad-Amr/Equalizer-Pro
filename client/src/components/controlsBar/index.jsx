@@ -1,8 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { AppContext } from "../../contexts/index";
 import { Container, Row, Col } from "react-bootstrap";
 import BootstrapSwitchButton from "bootstrap-switch-button-react";
-import axios from '../../globals/API/axios'
+import axios from "../../globals/API/axios";
 import "./style.css";
 
 function ControlsBar() {
@@ -12,17 +12,17 @@ function ControlsBar() {
     volume,
     setVolume,
     setMuteOriginal,
-      setShowSpectro,showSpectro,currentSlidersList,        currentMode,
-
+    setShowSpectro,
+    showSpectro,
+    currentSlidersList,
+    currentMode,
     zoom,
     setSpeed,
     setZoom,
     wavesurferObj,
     wavesurferProcessedObj,
-      processedFileUrl,
-        setProcessedFileUrl,
-        inputFile,
-        setInputFileUrl,
+    setProcessedFileUrl,
+    inputFile,
   } = useContext(AppContext);
 
   ////////////////////////////////// Start Handling Mehtods //////////////////////////////////
@@ -45,10 +45,21 @@ function ControlsBar() {
   };
 
   // set volume value to local state
+  const handleSkipNext = (e) => {
+    wavesurferObj.skipForward();
+    wavesurferProcessedObj.skipForward();
+  };
+
+  // set volume value to local state
+  const handleSkipPrevious = (e) => {
+    wavesurferObj.skipBackward();
+    wavesurferProcessedObj.skipBackward();
+  };
+
+  // set volume value to local state
   const handleVolumeSlider = (e) => {
     setVolume(e.target.value);
   };
-
 
   // set speed value to local state
   const handleSpeedSlider = (e) => {
@@ -60,40 +71,38 @@ function ControlsBar() {
     setZoom(e.target.value);
   };
 
+  const toggleMuteOriginal = (checked) => {
+    setMuteOriginal(!checked);
+  };
 
-  const toggleMuteOriginal=(checked: boolean) => {
-              setMuteOriginal(!checked)
+  const toggleSpectroShow = (checked) => {
+    setShowSpectro(checked);
+  };
 
-    }
-
- const toggleSpectroShow=(checked: boolean) => {
-    setShowSpectro(checked)
-}
-
-
-const handleButtonClick = async (e) => {
-
+  const handleButtonClick = async (e) => {
     const formData = new FormData();
     const values = get_values();
 
     formData.append("values", values);
 
-    const response = await axios
-      .post(`/file/${inputFile}`, {mode:currentMode,values:values})
+    await axios
+      .post(`/file/${inputFile}`, { mode: currentMode, values: values })
       .then((res) => {
-          console.log(res)
-        setProcessedFileUrl("http://localhost:5000/api/file/modified");
-      })
-      .catch((e) => {
-        // console.log("Error", e);
+        console.log(res.data);
+        setProcessedFileUrl("");
+        setProcessedFileUrl(res.data.file_url);
       });
 
-}
+    await axios
+      .get("/spectrogram/mod")
+      .then((res) => {})
+      .catch((e) => {});
+  };
 
- // normalizing the sliders values
+  // normalizing the sliders values
   function get_values() {
     const values = [];
-    currentSlidersList.map((e) => {
+    currentSlidersList.forEach((e) => {
       values.push(e.value);
     });
     return values;
@@ -103,29 +112,53 @@ const handleButtonClick = async (e) => {
 
   return (
     <Container fluid className="p-12">
-      <Row className={"align-items-center"} style={{paddingLeft:"20px", paddingRight:"20px"}}>
-        <Col >
-          {" "}
-          <button
-            title="play/pause"
-            className="controls"
-            onClick={handlePlayPause}
-          >
-            {playing ? (
-              <i className="material-symbols-rounded">pause_circle</i>
-            ) : (
-              <i className="material-symbols-rounded">play_circle</i>
-            )}
-          </button>
-        </Col>
-        <Col xs={1}>
-          <button title="reload" className="controls" onClick={handleReload}>
-            <i className="material-symbols-rounded">stop_circle</i>
-          </button>
-        </Col>
-
-
-        <Row xs={3}>
+      <Row
+        className={"align-items-center"}
+        style={{ paddingLeft: "20px", paddingRight: "20px" }}
+      >
+        <Col></Col>
+        <Row>
+          <Col>
+            <button
+              title="play/pause"
+              className="controls"
+              onClick={handlePlayPause}
+            >
+              {playing ? (
+                <i className="material-symbols-rounded">pause_circle</i>
+              ) : (
+                <i className="material-symbols-rounded">play_circle</i>
+              )}
+            </button>
+          </Col>
+          <Col>
+            <button title="reload" className="controls" onClick={handleReload}>
+              <i className="material-symbols-rounded">stop_circle</i>
+            </button>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <button
+              title="skip_previous"
+              className="controls"
+              onClick={handleSkipPrevious}
+            >
+              <i className="material-symbols-rounded">skip_previous</i>
+            </button>
+          </Col>
+          <Col>
+            <button
+              title="skip_next"
+              className="controls"
+              onClick={handleSkipNext}
+            >
+              <i className="material-symbols-rounded">skip_next</i>
+            </button>
+          </Col>
+        </Row>
+        <Col></Col>
+        <Row>
           <Col>
             <i className="material-symbols-rounded  zoom-icon">remove_circle</i>
           </Col>
@@ -145,7 +178,8 @@ const handleButtonClick = async (e) => {
           </Col>
         </Row>
 
- <Col xs={1}></Col>
+        <Col></Col>
+
         <Row className={"align-items-center"}>
           <Col>
             {volume > 0 ? (
@@ -166,18 +200,18 @@ const handleButtonClick = async (e) => {
             />
           </Col>
           <Col>
-          <BootstrapSwitchButton
-            onstyle="outline-primary"
-            offstyle="outline-secondary"
-            offlabel="Original"
-            onlabel="Modified"
-            width="100"
-            onChange={toggleMuteOriginal}
-          />
-        </Col>
+            <BootstrapSwitchButton
+              onstyle="outline-primary"
+              offstyle="outline-secondary"
+              offlabel="Original"
+              onlabel="Modified"
+              width="100"
+              onChange={toggleMuteOriginal}
+            />
+          </Col>
         </Row>
 
-        <Col xs={1}></Col>
+        <Col></Col>
         <Row>
           <Col>
             <select name="speed" id="speed" onChange={handleSpeedSlider}>
@@ -194,14 +228,14 @@ const handleButtonClick = async (e) => {
             </select>
           </Col>
         </Row>
-         <Col xs={1}></Col>
+        <Col></Col>
 
-      <button className="upload-btn upload" onClick={handleButtonClick}>
-        Process
-      </button>
-        <Col xs={1}></Col>
+        <button className="upload-btn upload" onClick={handleButtonClick}>
+          Process
+        </button>
+        <Col></Col>
 
-         <Col>
+        <Col>
           <BootstrapSwitchButton
             onstyle="outline-primary"
             offstyle="outline-secondary"
@@ -212,6 +246,7 @@ const handleButtonClick = async (e) => {
             onChange={toggleSpectroShow}
           />
         </Col>
+        <Col></Col>
       </Row>
     </Container>
   );

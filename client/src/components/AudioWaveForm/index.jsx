@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useEffect, useContext, useRef } from "react";
 import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js";
 import { AppContext } from "../../contexts/index";
 import wavesurfer from "wavesurfer.js";
@@ -8,7 +8,6 @@ import {
   color_black,
   color_white,
 } from "../../globals/constants/colors";
-import ControlsBar from "../controlsBar";
 const AudioWaveform = () => {
   ////////////////////////////////// Start Initialization //////////////////////////////////
 
@@ -23,9 +22,9 @@ const AudioWaveform = () => {
     inputFileUrl,
     processedFileUrl,
     setPlaying,
-   muteOriginal,
+    muteOriginal,
     zoom,
-      volume,
+    volume,
     speed,
     wavesurferObj,
     setWavesurferObj,
@@ -57,9 +56,10 @@ const AudioWaveform = () => {
           plugins: [
             TimelinePlugin.create({
               container: "#wave-timeline",
-             primaryFontColor:color_white,
-            secondaryColor:color_white
-
+              primaryFontColor: "#fff",
+              primaryColor: "#fff",
+              secondaryColor: "#fff",
+              secondaryFontColor: "#fff",
             }),
           ],
         })
@@ -87,7 +87,10 @@ const AudioWaveform = () => {
           plugins: [
             TimelinePlugin.create({
               container: "#wave-timeline",
-                primaryFontColor:color_white
+              primaryFontColor: "#fff",
+              primaryColor: "#fff",
+              secondaryColor: "#fff",
+              secondaryFontColor: "#fff",
             }),
           ],
         })
@@ -100,16 +103,22 @@ const AudioWaveform = () => {
   useEffect(() => {
     if (inputFileUrl && wavesurferObj) {
       wavesurferObj.load(inputFileUrl);
+      setPlaying(false);
     }
   }, [inputFileUrl, wavesurferObj]);
 
   // once the Processed file URL is ready
   // load the input Processed to produce the waveform
   useEffect(() => {
+    if (inputFileUrl && wavesurferObj) {
+      wavesurferObj.load(inputFileUrl);
+      setPlaying(false);
+    }
     if (processedFileUrl && wavesurferProcessedObj) {
       wavesurferProcessedObj.load(processedFileUrl);
+      setPlaying(false);
     }
-  }, [inputFileUrl, wavesurferProcessedObj]);
+  }, [processedFileUrl, wavesurferProcessedObj]);
 
   useEffect(() => {
     if (wavesurferObj) {
@@ -139,20 +148,19 @@ const AudioWaveform = () => {
     }
   }, [wavesurferProcessedObj]);
 
-
-    // set volume of the wavesurfer object
+  // set volume of the wavesurfer object
   // whenever volume variable in state is changed
   useEffect(() => {
-    if (wavesurferObj&&wavesurferProcessedObj) {
-     if(muteOriginal==false){
-          wavesurferObj.setVolume(0);
-           wavesurferProcessedObj.setVolume(volume);
-     }else{
+    if (wavesurferObj && wavesurferProcessedObj) {
+      if (muteOriginal === false) {
+        wavesurferObj.setVolume(0);
+        wavesurferProcessedObj.setVolume(volume);
+      } else {
         wavesurferObj.setVolume(volume);
-           wavesurferProcessedObj.setVolume(0);
-     }
+        wavesurferProcessedObj.setVolume(0);
+      }
     }
-  }, [muteOriginal,volume, wavesurferObj,wavesurferProcessedObj]);
+  }, [muteOriginal, volume, wavesurferObj, wavesurferProcessedObj]);
 
   // set zoom level of the wavesurfer object
   //whenever the zoom variable in state is changed
@@ -192,7 +200,6 @@ const AudioWaveform = () => {
     <section className="waveform-container">
       <div ref={wavesurferRef} id="waveform" />
       <div ref={timelineRef} id="wave-timeline" />
-
     </section>
   );
 };

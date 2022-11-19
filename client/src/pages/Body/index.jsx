@@ -1,7 +1,6 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import AudioWaveform from "../../components/AudioWaveForm/index";
-import Spectro from "../../components/Spectro/index";
-import SlidersBar from "../../components/SlidersBar";
+import Spectrogram from "../../components/Spectrogram/index";
 import "./style.css";
 import { Container, Row, Col } from "react-bootstrap";
 import ModesTabs from "../../components/ModesTabs";
@@ -9,24 +8,25 @@ import ControlsBar from "../../components/controlsBar";
 import { AppContext } from "../../contexts/index";
 
 const Body = () => {
-     const { showSpectro} = useContext(
-    AppContext
-  );
+  const { showSpectro } = useContext(AppContext);
   return (
     <Container fluid>
       <Row>
-        <Col xs={!showSpectro?8:12}>
+        <Col xs={!showSpectro ? 8 : 12}>
           <AudioWaveform />
         </Col>
-        <Col xs={!showSpectro?0:3} style={{"display": !showSpectro ? "block" : "none"}}>
-          <Spectro />
+        <Col
+          xs={!showSpectro ? 0 : 3}
+          style={{ display: !showSpectro ? "block" : "none" }}
+        >
+          <Spectrogram />
         </Col>
       </Row>
-         <br/>
-        <Row>
-      <ControlsBar />
-        </Row>
-     <br/>
+      <br />
+      <Row>
+        <ControlsBar />
+      </Row>
+      <br />
       <Row>
         <Col>
           <ModesTabs />
