@@ -23,7 +23,7 @@ const ModesTabs = () => {
                   setcurrentMode(1);
                 } else if (selectedKey === "music") {
                   setcurrentMode(2);
-                } else if (selectedKey === "voice") {
+                } else if (selectedKey === "animals") {
                   setcurrentMode(3);
                 }
               }}
@@ -38,7 +38,7 @@ const ModesTabs = () => {
                 <Nav.Link eventKey="music">Music</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="voice">Animals</Nav.Link>
+                <Nav.Link eventKey="animals">Animals</Nav.Link>
               </Nav.Item>
             </Nav>
             <Tab.Content
@@ -54,7 +54,7 @@ const ModesTabs = () => {
               <Tab.Pane eventKey="music">
                 <SlidersBar />
               </Tab.Pane>
-              <Tab.Pane eventKey="voice">
+              <Tab.Pane eventKey="animals">
                 <SlidersBar />
               </Tab.Pane>
             </Tab.Content>

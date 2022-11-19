@@ -53,10 +53,7 @@ const SlidersBar = () => {
     // changing slider value by index
     newSliderList[index].value = event.target.value;
 
-    // // setting the new  value to local state
-    // setCurrentSlidersList(newSliderList);
-
-    //setting the new value to global state
+    // setting the new value to global state
     setCurrentSlidersList([...newSliderList]);
   };
 

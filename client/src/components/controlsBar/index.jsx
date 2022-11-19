@@ -23,6 +23,10 @@ function ControlsBar() {
     wavesurferProcessedObj,
     setProcessedFileUrl,
     inputFile,
+    modifiedSpectrogram,
+    setModifiedSpectrogram,
+    originalSpectrogram,
+    setOriginalSpectrogram,
   } = useContext(AppContext);
 
   ////////////////////////////////// Start Handling Mehtods //////////////////////////////////
@@ -75,8 +79,18 @@ function ControlsBar() {
     setMuteOriginal(!checked);
   };
 
-  const toggleSpectroShow = (checked) => {
+  const toggleSpectroShow = async (checked) => {
+    setModifiedSpectrogram("");
     setShowSpectro(checked);
+    setOriginalSpectrogram(
+      `http://localhost:5000/api/spectrogram/${inputFile}`
+    );
+    await axios
+      .get("/spectrogram/mod")
+      .then((res) => {
+        setModifiedSpectrogram(`http://localhost:5000/api/spectrogram/mod`);
+      })
+      .catch((e) => {});
   };
 
   const handleButtonClick = async (e) => {
@@ -85,18 +99,17 @@ function ControlsBar() {
 
     formData.append("values", values);
 
+    console.log(currentMode);
+    console.log(values);
+
     await axios
       .post(`/file/${inputFile}`, { mode: currentMode, values: values })
       .then((res) => {
         console.log(res.data);
         setProcessedFileUrl("");
         setProcessedFileUrl(res.data.file_url);
-      });
-
-    await axios
-      .get("/spectrogram/mod")
-      .then((res) => {})
-      .catch((e) => {});
+      })
+      .then((res) => {});
   };
 
   // normalizing the sliders values
@@ -105,6 +118,7 @@ function ControlsBar() {
     currentSlidersList.forEach((e) => {
       values.push(e.value);
     });
+    console.log(values);
     return values;
   }
 
