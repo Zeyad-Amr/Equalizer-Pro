@@ -37,19 +37,22 @@ const UploadAudio = () => {
   // handle on upload file
   const handleFileUpload = async (e) => {
     let inputFile = e.target.files[0];
-    const formData = new FormData();
-    const values = get_values();
+    if (inputFile) {
+      let inputFile = e.target.files[0];
+      const formData = new FormData();
+      const values = get_values();
 
-    formData.append("file", inputFile);
-    formData.append("values", values);
-    setInputFile(inputFile.name);
+      formData.append("file", inputFile);
+      formData.append("values", values);
+      setInputFile(inputFile.name);
 
-    await axios
-      .post("/upload", formData)
-      .then((res) => {
-        setFile(inputFile);
-      })
-      .catch((e) => {});
+      await axios
+        .post("/upload", formData)
+        .then((res) => {
+          setFile(inputFile);
+        })
+        .catch((e) => {});
+    }
   };
 
   return (

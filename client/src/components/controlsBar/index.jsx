@@ -23,6 +23,10 @@ function ControlsBar() {
     wavesurferProcessedObj,
     setProcessedFileUrl,
     inputFile,
+    modifiedSpectrogram,
+    setModifiedSpectrogram,
+    originalSpectrogram,
+    setOriginalSpectrogram,
   } = useContext(AppContext);
 
   ////////////////////////////////// Start Handling Mehtods //////////////////////////////////
@@ -75,8 +79,24 @@ function ControlsBar() {
     setMuteOriginal(!checked);
   };
 
-  const toggleSpectroShow = (checked) => {
+  const toggleSpectroShow = async (checked) => {
+    setModifiedSpectrogram("");
     setShowSpectro(checked);
+    await axios
+      .get(`/spectrogram/${inputFile.split(".")[0]}`)
+      .then((res) => {
+        setOriginalSpectrogram(
+          `http://localhost:5000/api/spectrogram/${inputFile.split(".")[0]}`
+        );
+      })
+      .catch((e) => {});
+
+    await axios
+      .get("/spectrogram/mod")
+      .then((res) => {
+        setModifiedSpectrogram(`http://localhost:5000/api/spectrogram/mod`);
+      })
+      .catch((e) => {});
   };
 
   const handleButtonClick = async (e) => {
@@ -85,17 +105,33 @@ function ControlsBar() {
 
     formData.append("values", values);
 
+    console.log(currentMode);
+    console.log(values);
+
     await axios
       .post(`/file/${inputFile}`, { mode: currentMode, values: values })
       .then((res) => {
         console.log(res.data);
         setProcessedFileUrl("");
         setProcessedFileUrl(res.data.file_url);
-      });
+      })
+      .then((res) => {});
+
+    setModifiedSpectrogram("");
+    await axios
+      .get(`/spectrogram/${inputFile.split(".")[0]}`)
+      .then((res) => {
+        setOriginalSpectrogram(
+          `http://localhost:5000/api/spectrogram/${inputFile.split(".")[0]}`
+        );
+      })
+      .catch((e) => {});
 
     await axios
       .get("/spectrogram/mod")
-      .then((res) => {})
+      .then((res) => {
+        setModifiedSpectrogram(`http://localhost:5000/api/spectrogram/mod`);
+      })
       .catch((e) => {});
   };
 
@@ -105,6 +141,7 @@ function ControlsBar() {
     currentSlidersList.forEach((e) => {
       values.push(e.value);
     });
+    console.log(values);
     return values;
   }
 
