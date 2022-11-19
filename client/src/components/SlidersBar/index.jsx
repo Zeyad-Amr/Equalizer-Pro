@@ -6,7 +6,7 @@ import {
   vowelsModeSliders,
   animals,
 } from "../../globals/constants/modesSlider";
-import RangeSlider from "../RangeSlider/index";
+import RangeSlider from "../Rangeslider/index";
 import { AppContext } from "../../contexts/index";
 const SlidersBar = () => {
   // init context value
