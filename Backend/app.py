@@ -22,16 +22,6 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-# Convert values of frequencies as string to array of floats
-def map_values(valuesStr):
-    valueArr = []
-
-    for value in valuesStr:
-        print(value)
-        valueArr.append(float(value))
-    return valueArr
-
-
 # upload audio file to the server
 @app.route("/api/upload", methods=['POST'])
 def upload_file():
@@ -64,11 +54,7 @@ def file(file_name):
     # modify the audio file
     if request.method == 'POST':
         body = request.get_json()
-        mode = body["mode"]
-        values = body["values"]
-        # print(type(values[0]))
-        # print(values[0])
-        audioProcessing.modify_file(signalPath, mode, map_values(values))
+        audioProcessing.modify_file(signalPath, body)
         audioProcessing.spectrogram(modifiedSignalPath, 'modified')
         return {"file_url": "http://127.0.0.1:5000/api/file/" + file_name}, 200
 
