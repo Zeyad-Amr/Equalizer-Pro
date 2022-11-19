@@ -24,6 +24,7 @@ function ControlsBar() {
     inputFile,
     setModifiedSpectrogram,
     setOriginalSpectrogram,
+    setLoading,
   } = useContext(AppContext);
 
   ////////////////////////////////// Start Handling Mehtods //////////////////////////////////
@@ -98,20 +99,21 @@ function ControlsBar() {
 
   const handleButtonClick = async (e) => {
     const formData = new FormData();
+    setLoading(true);
     const values = get_values();
 
     formData.append("values", values);
 
-    console.log(values);
-
     await axios
       .post(`/file/${inputFile}`, { values: values })
       .then((res) => {
-        console.log(res.data);
+        setLoading(false);
         setProcessedFileUrl("");
         setProcessedFileUrl(res.data.file_url);
       })
-      .then((res) => {});
+      .catch((e) => {
+        setLoading(false);
+      });
 
     setModifiedSpectrogram("");
     await axios

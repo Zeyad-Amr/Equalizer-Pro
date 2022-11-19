@@ -10,6 +10,7 @@ const UploadAudio = () => {
     setProcessedFileUrl,
     currentSlidersList,
     setInputFile,
+    setLoading,
   } = useContext(AppContext);
 
   const [file, setFile] = useState();
@@ -38,6 +39,7 @@ const UploadAudio = () => {
   const handleFileUpload = async (e) => {
     let inputFile = e.target.files[0];
     if (inputFile) {
+      setLoading(true);
       let inputFile = e.target.files[0];
       const formData = new FormData();
       const values = get_values();
@@ -50,14 +52,21 @@ const UploadAudio = () => {
         .post("/upload", formData)
         .then((res) => {
           setFile(inputFile);
+          setLoading(false);
         })
-        .catch((e) => {});
+        .catch((e) => {
+          setLoading(false);
+        });
     }
   };
 
   return (
     <div className="upload-audio">
-      <button className="upload-btn upload" onClick={handleButtonClick}>
+      <button
+        variant="primary"
+        className="upload-btn upload"
+        onClick={handleButtonClick}
+      >
         Upload
       </button>
 

@@ -2,7 +2,7 @@
 /* style for the navbar */
 nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     align-items: stretch;
     height: 4.5rem;
     padding: 0 2rem 1rem 2rem;
@@ -12,13 +12,19 @@ nav {
   }
   
   nav>.brand {
+    
     display: flex;
     color: white;
     align-items: center;
   }
 
 
-
+  nav>.spinner {
+    display: flex;
+    margin-left: 40%;
+    color: white;
+    align-items: center;
+  }
   
   nav a {
     text-decoration: none;

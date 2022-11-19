@@ -32,11 +32,14 @@ export const FileContextProvider = ({ children }) => {
   // create an instance of the wavesurfer Processed
   const [wavesurferProcessedObj, setWavesurferProcessedObj] = useState();
 
-  // create an instance of the wavesurfer Processed
+  //  original spectrogram url
   const [originalSpectrogram, setOriginalSpectrogram] = useState();
 
-  // create an instance of the wavesurfer Processed
+  // modified spectrogram url
   const [modifiedSpectrogram, setModifiedSpectrogram] = useState();
+
+  // create an instance of the wavesurfer Processed
+  const [loading, setLoading] = useState(false);
   return (
     <AppContext.Provider
       value={{
@@ -70,6 +73,8 @@ export const FileContextProvider = ({ children }) => {
         setWavesurferObj,
         wavesurferProcessedObj,
         setWavesurferProcessedObj,
+        loading,
+        setLoading,
       }}
     >
       {children}
