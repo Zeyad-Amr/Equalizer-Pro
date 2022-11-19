@@ -45,6 +45,18 @@ function ControlsBar() {
   };
 
   // set volume value to local state
+  const handleSkipNext = (e) => {
+    wavesurferObj.skipForward();
+    wavesurferProcessedObj.skipForward();
+  };
+
+  // set volume value to local state
+  const handleSkipPrevious = (e) => {
+    wavesurferObj.skipBackward();
+    wavesurferProcessedObj.skipBackward();
+  };
+
+  // set volume value to local state
   const handleVolumeSlider = (e) => {
     setVolume(e.target.value);
   };
@@ -104,27 +116,49 @@ function ControlsBar() {
         className={"align-items-center"}
         style={{ paddingLeft: "20px", paddingRight: "20px" }}
       >
-        <Col>
-          {" "}
-          <button
-            title="play/pause"
-            className="controls"
-            onClick={handlePlayPause}
-          >
-            {playing ? (
-              <i className="material-symbols-rounded">pause_circle</i>
-            ) : (
-              <i className="material-symbols-rounded">play_circle</i>
-            )}
-          </button>
-        </Col>
-        <Col xs={1}>
-          <button title="reload" className="controls" onClick={handleReload}>
-            <i className="material-symbols-rounded">stop_circle</i>
-          </button>
-        </Col>
-
-        <Row xs={3}>
+        <Col></Col>
+        <Row>
+          <Col>
+            <button
+              title="play/pause"
+              className="controls"
+              onClick={handlePlayPause}
+            >
+              {playing ? (
+                <i className="material-symbols-rounded">pause_circle</i>
+              ) : (
+                <i className="material-symbols-rounded">play_circle</i>
+              )}
+            </button>
+          </Col>
+          <Col>
+            <button title="reload" className="controls" onClick={handleReload}>
+              <i className="material-symbols-rounded">stop_circle</i>
+            </button>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <button
+              title="skip_previous"
+              className="controls"
+              onClick={handleSkipPrevious}
+            >
+              <i className="material-symbols-rounded">skip_previous</i>
+            </button>
+          </Col>
+          <Col>
+            <button
+              title="skip_next"
+              className="controls"
+              onClick={handleSkipNext}
+            >
+              <i className="material-symbols-rounded">skip_next</i>
+            </button>
+          </Col>
+        </Row>
+        <Col></Col>
+        <Row>
           <Col>
             <i className="material-symbols-rounded  zoom-icon">remove_circle</i>
           </Col>
@@ -144,7 +178,8 @@ function ControlsBar() {
           </Col>
         </Row>
 
-        <Col xs={1}></Col>
+        <Col></Col>
+
         <Row className={"align-items-center"}>
           <Col>
             {volume > 0 ? (
@@ -176,7 +211,7 @@ function ControlsBar() {
           </Col>
         </Row>
 
-        <Col xs={1}></Col>
+        <Col></Col>
         <Row>
           <Col>
             <select name="speed" id="speed" onChange={handleSpeedSlider}>
@@ -193,12 +228,12 @@ function ControlsBar() {
             </select>
           </Col>
         </Row>
-        <Col xs={1}></Col>
+        <Col></Col>
 
         <button className="upload-btn upload" onClick={handleButtonClick}>
           Process
         </button>
-        <Col xs={1}></Col>
+        <Col></Col>
 
         <Col>
           <BootstrapSwitchButton
@@ -211,6 +246,7 @@ function ControlsBar() {
             onChange={toggleSpectroShow}
           />
         </Col>
+        <Col></Col>
       </Row>
     </Container>
   );

@@ -56,8 +56,10 @@ const AudioWaveform = () => {
           plugins: [
             TimelinePlugin.create({
               container: "#wave-timeline",
-              primaryFontColor: color_white,
-              secondaryColor: color_white,
+              primaryFontColor: "#fff",
+              primaryColor: "#fff",
+              secondaryColor: "#fff",
+              secondaryFontColor: "#fff",
             }),
           ],
         })
@@ -85,7 +87,10 @@ const AudioWaveform = () => {
           plugins: [
             TimelinePlugin.create({
               container: "#wave-timeline",
-              primaryFontColor: color_white,
+              primaryFontColor: "#fff",
+              primaryColor: "#fff",
+              secondaryColor: "#fff",
+              secondaryFontColor: "#fff",
             }),
           ],
         })
@@ -98,6 +103,7 @@ const AudioWaveform = () => {
   useEffect(() => {
     if (inputFileUrl && wavesurferObj) {
       wavesurferObj.load(inputFileUrl);
+      setPlaying(false);
     }
   }, [inputFileUrl, wavesurferObj]);
 
@@ -106,9 +112,11 @@ const AudioWaveform = () => {
   useEffect(() => {
     if (inputFileUrl && wavesurferObj) {
       wavesurferObj.load(inputFileUrl);
+      setPlaying(false);
     }
     if (processedFileUrl && wavesurferProcessedObj) {
       wavesurferProcessedObj.load(processedFileUrl);
+      setPlaying(false);
     }
   }, [processedFileUrl, wavesurferProcessedObj]);
 
