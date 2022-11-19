@@ -15,7 +15,6 @@ const UploadAudio = () => {
   const [file, setFile] = useState();
 
   useEffect(() => {
-    // console.log("new file" + file);
     if (file) {
       setInputFileUrl(URL.createObjectURL(file));
       setProcessedFileUrl(URL.createObjectURL(file));
@@ -50,9 +49,7 @@ const UploadAudio = () => {
       .then((res) => {
         setFile(inputFile);
       })
-      .catch((e) => {
-        console.log("Error", e);
-      });
+      .catch((e) => {});
   };
 
   return (

@@ -76,20 +76,15 @@ function ControlsBar() {
     await axios
       .post(`/file/${inputFile}`, { mode: currentMode, values: values })
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         setProcessedFileUrl("");
         setProcessedFileUrl(res.data.file_url);
       });
 
     await axios
       .get("/spectrogram/mod")
-      .then((res) => {
-        console.log(res);
-      })
-
-      .catch((e) => {
-        // console.log("Error", e);
-      });
+      .then((res) => {})
+      .catch((e) => {});
   };
 
   // normalizing the sliders values
