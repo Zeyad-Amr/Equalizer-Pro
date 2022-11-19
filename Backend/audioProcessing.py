@@ -48,14 +48,14 @@ def edit_amps(fourier, frequency, sliders):
             #print(type(range))
             if len(range) == 2:
                 index = (frequency > range[0])
-                if range["ranges"][2] == 1:
+                if range["ranges"][1] == 1:
                     fourier[index] = fourier[index] * slider["factor"] * \
                                      scipy.signal.triang(len(fourier[index]))
                 else:
                     fourier[index] = fourier[index] * slider["factor"]
             else:
                 index = (frequency > range[0]) & (frequency < range[1])
-                if range["ranges"][3] == 1:
+                if range["ranges"][2] == 1:
                     fourier[index] = fourier[index] * slider["factor"] * \
                         scipy.signal.triang(len(fourier[index]))
                 else:
