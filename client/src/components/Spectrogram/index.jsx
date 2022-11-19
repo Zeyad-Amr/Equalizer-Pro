@@ -3,9 +3,7 @@ import { AppContext } from "../../contexts/index";
 import { Col } from "react-bootstrap";
 
 function Spectrogram() {
-  const { inputFile, modifiedSpectrogram, originalSpectrogram } = useContext(
-    AppContext
-  );
+  const { modifiedSpectrogram, originalSpectrogram } = useContext(AppContext);
   const getImage = (props) => {
     if (originalSpectrogram && modifiedSpectrogram) {
       if (props.mod !== true) {

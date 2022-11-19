@@ -1,65 +1,83 @@
-{"music":{
-    "drums":{
-        "ranges":[[10, 500], [500, 200]],
-        "factor":1,
-        "triang":1
-        },
-    "trumpet":{
-        "ranges":[[0.5, 100], [730, 750], [1465, 1550], [2200, 2225], [
-        2920, 3000], [3695, 3705], [4410, 4470], [7390, 7410]],
-        "factor":1,
-        "triang":0
-        },
-    "trumpet_triang":{
-        "ranges":[[6500]],
-        "factor":1,
-        "triang":1
-        },
-    "xylophone":{
-        "ranges":[[0.5, 40], [700, 1100], [850, 950],
-                       [3300, 3350], [4000, 6000], [6000]],
-        "factor":0,
-        "triang":0
-        },
-    "xylophone_triang":{
-        "ranges":[[3710, 4000]],
-        "factor":0,
-        "triang":1
-        }
-},
+{
+  "music": {
+    "drums": {
+      "ranges": [
+        [10, 500],
+        [500, 200]
+      ],
+      "factor": 1,
+      "triang": 1
+    },
+    "trumpet": {
+      "ranges": [
+        [0.5, 100],
+        [730, 750],
+        [1465, 1550],
+        [2200, 2225],
+        [2920, 3000],
+        [3695, 3705],
+        [4410, 4470],
+        [7390, 7410]
+      ],
+      "factor": 1,
+      "triang": 0
+    },
+    "trumpet_triang": {
+      "ranges": [[6500]],
+      "factor": 1,
+      "triang": 1
+    },
+    "xylophone": {
+      "ranges": [
+        [0.5, 40],
+        [700, 1100],
+        [850, 950],
+        [3300, 3350],
+        [4000, 6000],
+        [6000]
+      ],
+      "factor": 0,
+      "triang": 0
+    },
+    "xylophone_triang": {
+      "ranges": [[3710, 4000]],
+      "factor": 0,
+      "triang": 1
+    }
+  },
 
-"vowels":{
-    "a":{
-        "ranges":[[0, 2400]],
-        "factor":1,
-        "triang":0
-        },
-    "i":{
-        "ranges":[[0,5000]],
-        "factor":1,
-        "triang":0
-        },
-    "o":{
-        "ranges":[[0,1850]],
-        "factor":1,
-        "triang":0
-        },
-    "u":{
-        "ranges":[[0, 2000]],
-        "factor":0,
-        "triang":0
-        }
-},
-"animals":{
-    "bird":{
-        "ranges":[[100, 3000]],
-        "factor":1,
-        "triang":0
-        },
-    "dog":{
-        "ranges":[[100, 3000]],
-        "factor":0,
-        "triang":0
-        }
-}
+  "vowels": {
+    "a": {
+      "ranges": [[0, 2400]],
+      "factor": 1,
+      "triang": 0
+    },
+    "i": {
+      "ranges": [[0, 5000]],
+      "factor": 1,
+      "triang": 0
+    },
+    "o": {
+      "ranges": [[0, 1850]],
+      "factor": 1,
+      "triang": 0
+    },
+    "u": {
+      "ranges": [[0, 2000]],
+      "factor": 0,
+      "triang": 0
+    }
+  },
+  "animals": {
+    "bird": {
+      "ranges": [[100, 3000]],
+      "factor": 1,
+      "triang": 0
+    },
+    "dog": {
+      "ranges": [[100, 3000]],
+      "factor": 0,
+      "triang": 0
+    }
+  }
 }

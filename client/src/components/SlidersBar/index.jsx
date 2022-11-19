@@ -6,7 +6,7 @@ import {
   vowelsModeSliders,
   animals,
 } from "../../globals/constants/modesSlider";
-import RangeSlider from "../Rangeslider/index";
+import RangeSlider from "../RangeSlider/index";
 import { AppContext } from "../../contexts/index";
 const SlidersBar = () => {
   // init context value
@@ -20,25 +20,25 @@ const SlidersBar = () => {
     const values = [];
     if (currentMode === 0) {
       freqModeSliders.forEach((e) => {
-        e.value = 1;
+        e.value = 1.0;
         values.push(e);
       });
       setCurrentSlidersList(values);
     } else if (currentMode === 1) {
       vowelsModeSliders.forEach((e) => {
-        e.value = 1;
+        e.value = 1.0;
         values.push(e);
       });
       setCurrentSlidersList([...vowelsModeSliders]);
     } else if (currentMode === 2) {
       musicModeSliders.forEach((e) => {
-        e.value = 1;
+        e.value = 1.0;
         values.push(e);
       });
       setCurrentSlidersList([...musicModeSliders]);
     } else if (currentMode === 3) {
       animals.forEach((e) => {
-        e.value = 1;
+        e.value = 1.0;
         values.push(e);
       });
       setCurrentSlidersList([...animals]);
@@ -51,7 +51,7 @@ const SlidersBar = () => {
     const newSliderList = [...currentSlidersList];
 
     // changing slider value by index
-    newSliderList[index].value = event.target.value;
+    newSliderList[index].value = parseFloat(event.target.value);
 
     // setting the new value to global state
     setCurrentSlidersList([...newSliderList]);

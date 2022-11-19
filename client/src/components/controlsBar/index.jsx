@@ -15,7 +15,6 @@ function ControlsBar() {
     setShowSpectro,
     showSpectro,
     currentSlidersList,
-    currentMode,
     zoom,
     setSpeed,
     setZoom,
@@ -23,9 +22,7 @@ function ControlsBar() {
     wavesurferProcessedObj,
     setProcessedFileUrl,
     inputFile,
-    modifiedSpectrogram,
     setModifiedSpectrogram,
-    originalSpectrogram,
     setOriginalSpectrogram,
   } = useContext(AppContext);
 
@@ -105,11 +102,10 @@ function ControlsBar() {
 
     formData.append("values", values);
 
-    console.log(currentMode);
     console.log(values);
 
     await axios
-      .post(`/file/${inputFile}`, { mode: currentMode, values: values })
+      .post(`/file/${inputFile}`, { values: values })
       .then((res) => {
         console.log(res.data);
         setProcessedFileUrl("");
@@ -139,7 +135,10 @@ function ControlsBar() {
   function get_values() {
     const values = [];
     currentSlidersList.forEach((e) => {
-      values.push(e.value);
+      values.push({
+        factor: e.value,
+        ranges: e.ranges,
+      });
     });
     console.log(values);
     return values;
