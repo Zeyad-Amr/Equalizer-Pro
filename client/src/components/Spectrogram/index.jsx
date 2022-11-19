@@ -3,13 +3,15 @@ import { AppContext } from "../../contexts/index";
 import { Col } from "react-bootstrap";
 
 function Spectrogram() {
-  const { inputFile } = useContext(AppContext);
+  const { inputFile, modifiedSpectrogram, originalSpectrogram } = useContext(
+    AppContext
+  );
   const getImage = (props) => {
-    if (inputFile !== "") {
+    if (originalSpectrogram && modifiedSpectrogram) {
       if (props.mod !== true) {
         return (
           <img
-            src={`http://localhost:5000/api/spectrogram/${inputFile}`}
+            src={originalSpectrogram}
             alt="Original Audio Spectrogram"
             height="220px"
           />
@@ -17,7 +19,7 @@ function Spectrogram() {
       } else {
         return (
           <img
-            src={`http://localhost:5000/api/spectrogram/mod`}
+            src={modifiedSpectrogram}
             alt="Modified Audio Spectrogram"
             height="220px"
           />
