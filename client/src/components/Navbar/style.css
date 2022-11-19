@@ -18,11 +18,7 @@ nav {
   }
 
 
-  nav>.uploadBtn {
-    display: flex;
-    color: white;
-    align-items: center;
-  }
+
   
   nav a {
     text-decoration: none;

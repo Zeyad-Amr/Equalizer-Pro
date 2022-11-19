@@ -6,13 +6,18 @@ import { Container, Row, Col } from "react-bootstrap";
 import ModesTabs from "../../components/ModesTabs";
 import ControlsBar from "../../components/controlsBar";
 import { AppContext } from "../../contexts/index";
-
+import UploadAudio from "../../components/UploadAudio/index";
 const Body = () => {
   const { showSpectro } = useContext(AppContext);
   return (
     <Container fluid>
       <Row>
-        <Col xs={!showSpectro ? 8 : 12}>
+        <Col xs={1}>
+          <div className="uploadBtn">
+            <UploadAudio />
+          </div>
+        </Col>
+        <Col xs={!showSpectro ? 7 : 11}>
           <AudioWaveform />
         </Col>
         <Col
