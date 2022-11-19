@@ -41,21 +41,21 @@ def modify_file(file, body):
 
 def edit_amps(fourier, frequency, sliders):
     for slider in sliders.values():
-        #print(slider)
-        #print(type(slider))
+        print(slider)
+        print(type(slider))
         for range in slider["ranges"]:
-            #print(range)
-            #print(type(range))
+            print(range)
+            print(type(range))
             if len(range) == 2:
                 index = (frequency > range[0])
-                if range["ranges"][1] == 1:
+                if range[1] == 1:
                     fourier[index] = fourier[index] * slider["factor"] * \
-                                     scipy.signal.triang(len(fourier[index]))
+                        scipy.signal.triang(len(fourier[index]))
                 else:
                     fourier[index] = fourier[index] * slider["factor"]
             else:
                 index = (frequency > range[0]) & (frequency < range[1])
-                if range["ranges"][2] == 1:
+                if range[2] == 1:
                     fourier[index] = fourier[index] * slider["factor"] * \
                         scipy.signal.triang(len(fourier[index]))
                 else:
