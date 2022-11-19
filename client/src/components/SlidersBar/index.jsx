@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import "./style.css";
 import {
   musicModeSliders,
@@ -17,30 +17,27 @@ const SlidersBar = () => {
   // init sliders list
   // according to the current mode
   useEffect(() => {
+    const values = [];
     if (currentMode === 0) {
-      const values = [];
-      freqModeSliders.map((e) => {
+      freqModeSliders.forEach((e) => {
         e.value = 1;
         values.push(e);
       });
       setCurrentSlidersList(values);
     } else if (currentMode === 1) {
-      const values = [];
-      vowelsModeSliders.map((e) => {
+      vowelsModeSliders.forEach((e) => {
         e.value = 1;
         values.push(e);
       });
       setCurrentSlidersList([...vowelsModeSliders]);
     } else if (currentMode === 2) {
-      const values = [];
-      musicModeSliders.map((e) => {
+      musicModeSliders.forEach((e) => {
         e.value = 1;
         values.push(e);
       });
       setCurrentSlidersList([...musicModeSliders]);
     } else if (currentMode === 3) {
-      const values = [];
-      animals.map((e) => {
+      animals.forEach((e) => {
         e.value = 1;
         values.push(e);
       });
