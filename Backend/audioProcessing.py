@@ -29,17 +29,36 @@ def save(signal, sr):
     write("./files/samples/modified.wav", np.int0(sr), inverseFloat)
 
 
-def edit_amps(fourier, frequency, ranges, factor, triang=False):
-    for range in ranges:
-        if len(range) == 1:
-            index = (frequency > range[0])
-        else:
-            index = (frequency > range[0]) & (frequency < range[1])
-        if triang:
-            fourier[index] = fourier[index] * factor * \
-                scipy.signal.triang(len(fourier[index]))
-        else:
-            fourier[index] = fourier[index] * factor
+def edit_amps(fourier, frequency, sliders=[] ):
+
+    for slider in sliders:
+        for range in slider["Ranges"]:
+            if len(range) == 1:
+                index = (frequency > range[0])
+            else:
+                index = (frequency > range[0]) & (frequency < range[1])
+            if slider["triang"] == 1:
+                fourier[index] = fourier[index] * slider["factor"] * \
+                                 scipy.signal.triang(len(fourier[index]))
+            else:
+                fourier[index] = fourier[index] * slider["factor"]
+    return fourier
+
+
+           #slider["Ranges"]
+    #
+    # for range in ranges:
+    #     if len(range) == 1:
+    #         index = (frequency > range[0])
+    #     else:
+    #         index = (frequency > range[0]) & (frequency < range[1])
+    #     if triang:
+    #         fourier[index] = fourier[index] * factor * \
+    #             scipy.signal.triang(len(fourier[index]))
+    #     else:
+    #         fourier[index] = fourier[index] * factor
+    #
+    # return fourier
 
 
 # Frequency mode
@@ -109,7 +128,6 @@ def Animal(frequency, fourier, values=[]):
     DogRanges = [[100, 3000]]
     edit_amps(fourier, frequency, DogRanges, values[1])
     return fourier, frequency
-
 
 def spectrogram(signal, name=''):
     signal, sr = load_signal(signal)
