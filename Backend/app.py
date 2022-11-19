@@ -54,7 +54,7 @@ def file(file_name):
     # modify the audio file
     if request.method == 'POST':
         body = request.get_json()
-        audioProcessing.modify_file(signalPath, body)
+        audioProcessing.modify_file(signalPath, body["values"])
         audioProcessing.spectrogram(modifiedSignalPath, 'modified')
         return {"file_url": "http://127.0.0.1:5000/api/file/" + file_name}, 200
 

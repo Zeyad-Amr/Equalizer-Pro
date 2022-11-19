@@ -40,7 +40,7 @@ def modify_file(file, body):
 
 
 def edit_amps(fourier, frequency, sliders):
-    for slider in sliders.values():
+    for slider in sliders:
         print(slider)
         print(type(slider))
         for range in slider["ranges"]:

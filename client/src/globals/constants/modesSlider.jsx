@@ -190,7 +190,7 @@ export const animals = [
     max: 1,
     step: 1,
     value: 1,
-    ranges: [[100, 3000, 1]],
+    ranges: [[3000, 7000, 1]],
   },
   {
     id: 0,
